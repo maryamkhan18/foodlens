@@ -1,0 +1,871 @@
+[
+  {
+    "time": "2026-06-04 12:45:17.605567",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:05:38.497456",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:05:47.814336",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:06:04.487452",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:08:15.208693",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:10:51.671271",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:14:26.159395",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:14:44.917632",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:15:08.158098",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:18:41.012459",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:18:48.583387",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:19:00.958102",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:20:40.673938",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:22:22.608842",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:22:30.168660",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:22:56.466182",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:23:12.635387",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:28:03.145094",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 13:28:15.490940",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 0,
+    "protein": 0,
+    "carbs": 0,
+    "fats": 0,
+    "health_score": 85
+  },
+  {
+    "time": "2026-06-04 14:55:41.659311",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 14:55:57.066618",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 14:59:28.846655",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:00:06.483349",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:04:40.761833",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:16:16.787242",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:17:11.297240",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:17:56.319562",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:18:57.013496",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:20:39.729929",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:21:39.296902",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:23:31.524294",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:28:56.238652",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:35:52.030592",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:36:14.310590",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:44:56.017823",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:45:26.360288",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-04 15:46:07.776981",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:52:27.038312",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 15:53:40.392226",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 16:10:01.258460",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 16:10:10.011959",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-04 16:10:52.264863",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-05 14:20:07.818473",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-05 14:22:20.476507",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 625,
+    "protein": 20.0,
+    "carbs": 87.5,
+    "fats": 25.0,
+    "health_score": 56
+  },
+  {
+    "time": "2026-06-05 14:22:28.851452",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-05 14:23:16.402222",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-05 14:24:52.197054",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-05 14:26:23.105605",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-05 14:27:01.185023",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 750,
+    "protein": 25.0,
+    "carbs": 87.5,
+    "fats": 30.0,
+    "health_score": 34
+  },
+  {
+    "time": "2026-06-05 14:30:26.076356",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-05 16:19:14.453985",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-08 13:42:50.459186",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-08 13:43:20.550395",
+    "foods": [
+      "Nasi Goreng"
+    ],
+    "calories": 250,
+    "protein": 8,
+    "carbs": 35,
+    "fats": 10,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-08 13:43:45.637690",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-08 13:44:20.527752",
+    "foods": [
+      "Rawon"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-08 13:44:24.421154",
+    "foods": [
+      "Soto"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 15:51:31.844242",
+    "foods": [
+      "Macaroni"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 15:53:11.411471",
+    "foods": [
+      "Kheer"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 15:53:17.886023",
+    "foods": [
+      "Chicken-Manchurian"
+    ],
+    "calories": 164,
+    "protein": 26.7,
+    "carbs": 0.0,
+    "fats": 6.3,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 15:54:14.080841",
+    "foods": [
+      "Chocolate-Cake"
+    ],
+    "calories": 399,
+    "protein": 3.6,
+    "carbs": 60.3,
+    "fats": 15.9,
+    "health_score": 80
+  },
+  {
+    "time": "2026-06-19 15:56:18.580860",
+    "foods": [
+      "Chapli-Kebab"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 15:59:29.446967",
+    "foods": [
+      "Cupcake"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 15:59:41.298972",
+    "foods": [
+      "Cupcake"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 15:59:53.672575",
+    "foods": [
+      "Jalebi"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:00:45.618256",
+    "foods": [
+      "Jalebi"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:02:48.813452",
+    "foods": [
+      "Jalebi"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:03:45.512525",
+    "foods": [
+      "Jalebi"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:04:12.134075",
+    "foods": [
+      "Jalebi"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:07:30.412700",
+    "foods": [
+      "Paya"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:14:55.476852",
+    "foods": [
+      "Haleem"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:19:45.857127",
+    "foods": [
+      "Haleem"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-19 16:21:49.007785",
+    "foods": [
+      "Chicken-Karahi"
+    ],
+    "calories": 200,
+    "protein": 25,
+    "carbs": 0,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-24 15:13:07.062034",
+    "foods": [
+      "Cake"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-24 15:14:46.979019",
+    "foods": [
+      "Biryani"
+    ],
+    "calories": 109,
+    "protein": 1.9,
+    "carbs": 17.9,
+    "fats": 3.2,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-24 15:15:05.242103",
+    "foods": [
+      "French-Fries"
+    ],
+    "calories": 198,
+    "protein": 1.9,
+    "carbs": 18.5,
+    "fats": 13.1,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-24 15:15:20.963360",
+    "foods": [
+      "Snack"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-24 15:16:26.479574",
+    "foods": [
+      "Pulao"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-24 15:16:43.093575",
+    "foods": [
+      "Nihari"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  },
+  {
+    "time": "2026-06-24 15:16:56.848726",
+    "foods": [
+      "Qorma"
+    ],
+    "calories": 300,
+    "protein": 10,
+    "carbs": 35,
+    "fats": 12,
+    "health_score": 100
+  }
+]

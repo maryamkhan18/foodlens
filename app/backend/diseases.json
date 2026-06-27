@@ -1,0 +1,285 @@
+{
+  "conditions": {
+    "diabetes": {
+      "name": "Type 2 Diabetes",
+      "description": "Manage blood sugar levels",
+      "avoid": [
+        "white rice", "white bread", "sugar", "soft drinks", "candy",
+        "pastries", "fruit juice", "white pasta", "sweetened cereals", "honey"
+      ],
+      "allow": [
+        "brown rice", "whole wheat bread", "oats", "vegetables", "lean chicken",
+        "fish", "beans", "lentils", "nuts", "low fat yogurt", "apple",
+        "berries", "whole wheat pasta", "sweet potato"
+      ],
+      "icon": "🩺",
+      "meals": {
+        "breakfast": [
+          "Oatmeal with berries and almonds",
+          "Whole wheat toast with low fat cottage cheese",
+          "Vegetable omelet with whole grain bread",
+          "Greek yogurt with walnuts and chia seeds"
+        ],
+        "lunch": [
+          "Grilled chicken with brown rice and vegetables",
+          "Lentil soup with whole wheat bread",
+          "Fish with sweet potato and broccoli",
+          "Chickpea salad with olive oil dressing"
+        ],
+        "dinner": [
+          "Baked salmon with quinoa and green beans",
+          "Turkey meatballs with whole wheat pasta",
+          "Vegetable stir fry with tofu and brown rice",
+          "Grilled tilapia with steamed vegetables"
+        ]
+      },
+      "tips": [
+        "Monitor portion sizes carefully",
+        "Include fiber at every meal",
+        "Choose complex carbohydrates over simple ones",
+        "Eat protein with each meal to slow sugar absorption"
+      ]
+    },
+    "gerd": {
+      "name": "Acid Reflux (GERD)",
+      "description": "Reduce acid triggers",
+      "avoid": [
+        "coffee", "tea", "spicy food", "tomato", "citrus", "fried food",
+        "fatty meat", "chocolate", "mint", "alcohol", "onion", "garlic"
+      ],
+      "allow": [
+        "oatmeal", "rice", "chicken breast", "fish", "lean beef",
+        "vegetables (except tomato/onion)", "banana", "apple", "bread",
+        "milk", "yogurt", "egg whites", "ginger (cooked)"
+      ],
+      "icon": "🔥",
+      "meals": {
+        "breakfast": [
+          "Oatmeal with banana and almond milk",
+          "Rice cakes with peanut butter",
+          "Egg white scramble with toast",
+          "Low fat milk with plain cereal"
+        ],
+        "lunch": [
+          "Grilled chicken with white rice",
+          "Baked fish with steamed vegetables",
+          "Turkey sandwich on whole grain bread",
+          "Vegetable soup (no tomato, no spice)"
+        ],
+        "dinner": [
+          "Lean chicken with baked potato",
+          "White fish with steamed broccoli",
+          "Ground turkey meatballs with pasta",
+          "Baked tilapia with rice pilaf"
+        ]
+      },
+      "tips": [
+        "Eat smaller, more frequent meals",
+        "Avoid eating 3 hours before bed",
+        "Stay upright for 30 minutes after meals",
+        "Eliminate trigger foods one at a time"
+      ]
+    },
+    "hypertension": {
+      "name": "High Blood Pressure",
+      "description": "Reduce sodium, increase potassium",
+      "avoid": [
+        "salt", "processed meat", "canned soup", "salty snacks", "fast food",
+        "butter", "cream", "cheese (high sodium)", "soy sauce", "pickled foods"
+      ],
+      "allow": [
+        "vegetables", "fruits", "whole grains", "lean meat", "fish",
+        "low fat dairy", "beans", "nuts", "potatoes", "sweet potatoes",
+        "banana", "spinach", "broccoli"
+      ],
+      "icon": "❤️",
+      "meals": {
+        "breakfast": [
+          "Oatmeal with fresh berries",
+          "Whole wheat toast with avocado",
+          "Fresh fruit salad with yogurt",
+          "Vegetable omelet (no salt)"
+        ],
+        "lunch": [
+          "Grilled salmon with vegetables",
+          "Chickpea salad with olive oil",
+          "Lentil soup with whole grain bread",
+          "Turkey sandwich with lettuce"
+        ],
+        "dinner": [
+          "Baked tilapia with sweet potato",
+          "Vegetable stir fry with tofu",
+          "Grilled chicken with brown rice",
+          "Bean-based chili with vegetables"
+        ]
+      },
+      "tips": [
+        "Limit sodium to 2,300mg per day",
+        "Increase potassium-rich foods",
+        "Exercise at least 30 minutes daily",
+        "Manage stress with relaxation techniques"
+      ]
+    },
+    "lactose_intolerance": {
+      "name": "Lactose Intolerance",
+      "description": "Avoid dairy products",
+      "avoid": [
+        "milk", "cheese", "cream", "butter", "ice cream",
+        "yogurt (regular)", "cream cheese", "condensed milk"
+      ],
+      "allow": [
+        "almond milk", "oat milk", "soy milk", "coconut milk",
+        "lactose-free milk", "vegetables", "fruits", "meat", "fish",
+        "beans", "rice", "bread", "pasta", "dark chocolate"
+      ],
+      "icon": "🥛",
+      "meals": {
+        "breakfast": [
+          "Oatmeal with almond milk and berries",
+          "Toast with avocado and tomato",
+          "Smoothie with oat milk and banana",
+          "Rice cereal with coconut milk"
+        ],
+        "lunch": [
+          "Grilled chicken with rice and vegetables",
+          "Fish with sweet potato",
+          "Lentil soup with olive oil",
+          "Vegetable stir fry with tofu"
+        ],
+        "dinner": [
+          "Baked salmon with broccoli",
+          "Turkey meatballs with pasta",
+          "Chickpea curry with rice",
+          "Grilled beef with roasted vegetables"
+        ]
+      },
+      "tips": [
+        "Use plant-based milk alternatives in recipes",
+        "Read labels carefully for hidden dairy ingredients",
+        "Choose lactose-free certified products",
+        "Try fermented products like tempeh or kimchi"
+      ]
+    },
+    "gluten_sensitivity": {
+      "name": "Gluten Sensitivity / Celiac",
+      "description": "Avoid wheat, barley, rye",
+      "avoid": [
+        "wheat bread", "pasta", "cookies", "cakes", "beer",
+        "soy sauce", "processed foods", "cereal (wheat)", "flour"
+      ],
+      "allow": [
+        "rice", "corn", "potatoes", "vegetables", "fruits", "meat",
+        "fish", "eggs", "beans", "nuts", "gluten-free bread",
+        "gluten-free pasta", "quinoa"
+      ],
+      "icon": "🌾",
+      "meals": {
+        "breakfast": [
+          "Rice cakes with honey and banana",
+          "Scrambled eggs with gluten-free toast",
+          "Corn tortillas with avocado",
+          "Gluten-free oatmeal with berries"
+        ],
+        "lunch": [
+          "Rice with grilled chicken and vegetables",
+          "Gluten-free pasta with tomato sauce",
+          "Corn tortilla tacos with fish",
+          "Quinoa salad with vegetables"
+        ],
+        "dinner": [
+          "Baked salmon with potato",
+          "Rice bowl with beef and vegetables",
+          "Corn-based curry with rice",
+          "Grilled chicken with sweet potato"
+        ]
+      },
+      "tips": [
+        "Read all labels carefully for hidden gluten",
+        "Use gluten-free flour alternatives like almond or rice flour",
+        "Avoid cross-contamination in kitchen tools",
+        "Try naturally gluten-free grains like millet and sorghum"
+      ]
+    },
+    "high_cholesterol": {
+      "name": "High Cholesterol",
+      "description": "Reduce saturated fats",
+      "avoid": [
+        "fatty meat", "butter", "cream", "cheese (full fat)", "egg yolks",
+        "fried food", "coconut oil", "palm oil", "processed meat", "whole milk"
+      ],
+      "allow": [
+        "lean chicken", "fish (salmon, mackerel)", "vegetables", "fruits",
+        "whole grains", "low fat dairy", "olive oil", "nuts (in moderation)",
+        "beans", "egg whites"
+      ],
+      "icon": "💚",
+      "meals": {
+        "breakfast": [
+          "Oatmeal with berries and honey",
+          "Whole wheat toast with almond butter",
+          "Egg white omelet with vegetables",
+          "Low fat yogurt with granola"
+        ],
+        "lunch": [
+          "Grilled salmon with brown rice",
+          "Lentil soup with vegetables",
+          "Turkey breast sandwich",
+          "Chickpea salad with olive oil"
+        ],
+        "dinner": [
+          "Baked tilapia with sweet potato",
+          "Lean chicken with quinoa",
+          "Vegetable stir fry with tofu",
+          "Fish with steamed broccoli"
+        ]
+      },
+      "tips": [
+        "Increase soluble fiber intake (oats, beans)",
+        "Use olive oil instead of butter",
+        "Eat fatty fish 2-3 times per week",
+        "Limit egg yolks to 3 per week"
+      ]
+    },
+    "ibs": {
+      "name": "IBS (Irritable Bowel Syndrome)",
+      "description": "Manage digestive symptoms",
+      "avoid": [
+        "high fat foods", "dairy", "caffeine", "alcohol", "spicy food",
+        "artificial sweeteners", "beans (dried)", "cruciferous vegetables (raw)",
+        "carbonated drinks"
+      ],
+      "allow": [
+        "white rice", "white bread", "lean meat", "fish", "chicken",
+        "carrots", "green beans", "cucumber", "melon", "banana",
+        "plain yogurt", "ginger", "mint tea"
+      ],
+      "icon": "🍠",
+      "meals": {
+        "breakfast": [
+          "White rice with steamed vegetables",
+          "Plain toast with jam",
+          "Scrambled eggs (low fat)",
+          "Boiled potato with a pinch of salt"
+        ],
+        "lunch": [
+          "Grilled chicken with white rice",
+          "Baked fish with carrots",
+          "Plain pasta with olive oil",
+          "Turkey breast with steamed vegetables"
+        ],
+        "dinner": [
+          "Boiled chicken with rice",
+          "Baked tilapia with sweet potato",
+          "Plain beef with vegetables",
+          "Pasta with mild sauce"
+        ]
+      },
+      "tips": [
+        "Eat small, frequent meals throughout the day",
+        "Stay well hydrated with water and herbal teas",
+        "Keep a food diary to identify personal triggers",
+        "Manage stress — it directly affects gut symptoms"
+      ]
+    }
+  }
+}

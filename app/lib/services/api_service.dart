@@ -4,34 +4,23 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
+  static const baseUrl = "https://foodlens-production-9e4f.up.railway.app";
 
-  static Future<Map<String, dynamic>> analyzeFood(
-      File imageFile) async {
-
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse("http://192.168.100.9:8000/analyze"),
-    );
+  static Future<Map<String, dynamic>> analyzeFood(File imageFile) async {
+    var request = http.MultipartRequest('POST', Uri.parse("$baseUrl/analyze"));
 
     request.files.add(
-      await http.MultipartFile.fromPath(
-        'file',
-        imageFile.path,
-      ),
+      await http.MultipartFile.fromPath('file', imageFile.path),
     );
 
     var response = await request.send();
 
-    var responseData =
-        await response.stream.bytesToString();
+    var responseData = await response.stream.bytesToString();
 
     return jsonDecode(responseData);
   }
+
   // ================= DIETARY FEATURE =================
-
-
-
-  static const baseUrl = "http://192.168.100.9:8000";
 
   // GET CONDITIONS
   static Future<List> getConditions() async {
@@ -57,6 +46,3 @@ class ApiService {
     return jsonDecode(res.body);
   }
 }
-
-
-

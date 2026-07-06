@@ -31,7 +31,7 @@ class _RecipeAdjusterScreenState extends State<RecipeAdjusterScreen>
   late AnimationController _fadeCtrl;
   late Animation<double> _fadeAnim;
 
-static const String _baseUrl = 'http://192.168.100.9:8000';
+static const String _baseUrl = 'https://foodlens-production-9e4f.up.railway.app';
   static const _bg       = Color(0xFF0D1117);
   static const _surface  = Color(0xFF161B22);
   static const _card     = Color(0xFF1C2333);

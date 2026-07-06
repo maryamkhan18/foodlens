@@ -1,8 +1,9 @@
+import os
 import requests
 import json
 import re
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 # ─── YOLO trained dishes — exact 5 ───
 INGREDIENTS_DATA = {
     "nasi goreng": "rice, egg, chicken, soy sauce, garlic, shallots, onion, chili, tomato, cucumber, green onion, sesame oil, fish sauce, sweet soy sauce",

@@ -13,13 +13,16 @@ from weekly_tracker import get_weekly_data
 from gemini_service import get_ingredients, get_ingredients_fallback
 from nutrition_api import get_nutrition, get_ingredients_usda
 from health_engine import calculate_health_score
-from meal_balance import process_meal_balance
+from meal_balance import parse_meal, process_meal_balance
 from nutrition_engine import analyze_meal
 
 # ── Recipe Adjuster ──
 from recipe_adjuster import router as recipe_router
 
 app = FastAPI()
+@app.get("/test")
+def test_meal():
+    return parse_meal("banana shake")
 
 # Register recipe routes
 app.include_router(recipe_router)

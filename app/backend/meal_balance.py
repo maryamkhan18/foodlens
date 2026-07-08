@@ -127,13 +127,13 @@ DINNER_BALANCED = ["Dal + Roti + Salad", "Chicken + Vegetables + Brown Rice", "L
 
 COMBO_FOODS = {
 
+"banana milkshake":["banana","milk"],
 "banana shake":["banana","milk"],
 "banana smoothie":["banana","milk"],
-"banana milkshake":["banana","milk"],
 
+"mango milkshake":["mango","milk"],
 "mango shake":["mango","milk"],
 "mango smoothie":["mango","milk"],
-"mango milkshake":["mango","milk"],
 
 "apple shake":["apple","milk"],
 
@@ -141,19 +141,13 @@ COMBO_FOODS = {
 
 "dry fruit shake":["milk","almonds"],
 
-"lassi":["yogurt"],
+
 
 "tea with milk":["tea","milk"],
 
 "coffee with milk":["coffee","milk"],
 
-"banana milkshake":["banana","milk"],
-"banana shake":["banana","milk"],
-"banana smoothie":["banana","milk"],
 
-"mango milkshake":["mango","milk"],
-"mango shake":["mango","milk"],
-"mango smoothie":["mango","milk"],
 
 "lassi":["yogurt"],
 
@@ -253,6 +247,7 @@ def parse_meal(meal_text):
         key=len,
         reverse=True,
     )
+    
 
     # ====================================================
     # SMART COMBO EXPANSION
@@ -263,7 +258,7 @@ def parse_meal(meal_text):
        if combo in processed_text:
 
         # remove combo words first
-        processed_text += " " + " ".join(ingredients)
+         processed_text = processed_text + " " + " ".join(ingredients)
     # ====================================================
     # COMMON ALIASES
     # ====================================================
@@ -295,6 +290,7 @@ def parse_meal(meal_text):
         "tea":"chai",
 
     }
+   
 
     for old,new in aliases.items():
 

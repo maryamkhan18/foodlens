@@ -1,65 +1,114 @@
+import re
+
 # ── Nutrition Database ────────────────────────────────────────────
+# tuple format: (calories, protein_g, carbs_g, fat_g, fiber_g, calcium_mg, iron_mg, vitc_mg)
 FOOD_DB = {
-    # ── Grains & Bread ──────────────────────────────────────────
-    "oats":             (300, 10,  54,  5,  4,  50,  3.5, 0),
-    "oatmeal":          (300, 10,  54,  5,  4,  50,  3.5, 0),
-    "paratha":          (260,  5,  36, 10,  2,  30,  1.5, 0),
-    "roti":             (120,  3,  25,  1,  2,  20,  1.0, 0),
-    "chapati":          (120,  3,  25,  1,  2,  20,  1.0, 0),
-    "bread":            (80,   3,  15,  1,  1,  25,  0.8, 0),
-    "brown bread":      (90,   4,  17,  1,  2,  30,  1.2, 0),
-    "rice":             (200,  4,  44,  0,  1,  15,  1.0, 0),
-    "biryani":          (400, 20,  45, 14,  2,  60,  2.5, 5),
-    "chicken biryani":  (420, 25,  45, 14,  2,  60,  2.8, 5),
-    "naan":             (280,  8,  50,  5,  2,  40,  1.5, 0),
-    "puri":             (200,  3,  24, 10,  1,  20,  0.8, 0),
-    "cornflakes":       (360, 10,  84,  1,  2,  10,  8.0, 15),
-    "pasta":            (220,  8,  43,  1,  2,  20,  1.2, 0),
-    # ── Proteins ────────────────────────────────────────────────
-    "egg":              (78,   6,   0,  5,  0,  25,  1.0, 0),
-    "omelette":         (150,  11,  2, 11,  0,  50,  1.5, 0),
-    "boiled egg":       (78,   6,   0,  5,  0,  25,  1.0, 0),
-    "chicken":          (165, 31,   0,  4,  0,  15,  1.0, 0),
-    "grilled chicken":  (165, 31,   0,  4,  0,  15,  1.0, 0),
-    "chicken curry":    (280, 25,   8, 16,  1,  40,  2.0, 5),
-    "beef":             (250, 26,   0, 15,  0,  18,  2.5, 0),
-    "mutton":           (294, 25,   0, 20,  0,  22,  2.8, 0),
-    "fish":             (130, 26,   0,  3,  0,  30,  0.8, 0),
-    "tuna":             (130, 29,   0,  1,  0,  10,  1.0, 0),
-    "dal":              (180,  9,  30,  1,  8,  40,  3.5, 5),
-    "lentils":          (180,  9,  30,  1,  8,  40,  3.5, 5),
-    "chickpeas":        (269, 15,  45,  4, 13,  80,  5.0, 5),
-    "chana":            (269, 15,  45,  4, 13,  80,  5.0, 5),
-    # ── Dairy ───────────────────────────────────────────────────
-    "milk":             (150,  8,  12,  8,  0, 300,  0.1, 2),
-    "yogurt":           (100,  5,  12,  3,  0, 180,  0.1, 1),
-    "dahi":             (100,  5,  12,  3,  0, 180,  0.1, 1),
-    "cheese":           (110,  7,   0,  9,  0, 200,  0.2, 0),
-    "paneer":           (265, 18,   4, 20,  0, 480,  0.5, 0),
-    "butter":           (100,  0,   0, 11,  0,   2,  0.0, 0),
-    # ── Vegetables ──────────────────────────────────────────────
-    "salad":            (50,   2,  10,  0,  3,  50,  1.5, 30),
-    "vegetables":       (80,   3,  15,  1,  4,  60,  2.0, 25),
-    "spinach":          (23,   3,   4,  0,  2, 100,  2.7, 28),
-    "tomato":           (20,   1,   4,  0,  1,  10,  0.5, 14),
-    "potato":           (160,  4,  37,  0,  2,  15,  1.5, 15),
-    "sabzi":            (80,   2,  12,  3,  3,  40,  1.5, 15),
-    # ── Fruits ──────────────────────────────────────────────────
-    "banana":           (90,   1,  23,  0,  3,   5,  0.3, 9),
-    "apple":            (80,   0,  21,  0,  4,  10,  0.1, 8),
-    "orange":           (60,   1,  15,  0,  3,  50,  0.1, 53),
-    "mango":            (100,  1,  25,  0,  2,   2,  0.2, 36),
-    # ── Beverages ───────────────────────────────────────────────
-    "tea":              (30,   1,   5,  1,  0,  30,  0.1, 0),
-    "chai":             (30,   1,   5,  1,  0,  30,  0.1, 0),
-    "coffee":           (5,    0,   1,  0,  0,   5,  0.0, 0),
-    "juice":            (110,  1,  26,  0,  0,  10,  0.2, 50),
-    # ── Snacks ──────────────────────────────────────────────────
-    "nuts":             (170,  5,   6, 15,  2,  20,  0.5, 0),
-    "almonds":          (170,  6,   6, 15,  3,  75,  1.0, 0),
-    "peanut butter":    (190,  8,   6, 16,  2,  17,  0.5, 0),
-    "biscuits":         (150,  2,  22,  6,  0,  30,  0.5, 0),
-    "samosa":           (250,  5,  32, 12,  2,  20,  1.5, 5),
+
+# ==========================================================
+# GRAINS & BREAD
+# ==========================================================
+
+"roti": (120,3,25,1,2,20,1.0,0),
+"chapati": (120,3,25,1,2,20,1.0,0),
+"paratha": (260,5,36,10,2,30,1.5,0),
+"naan": (280,8,50,5,2,40,1.5,0),
+"puri": (200,3,24,10,1,20,0.8,0),
+
+"bread": (80,3,15,1,1,25,0.8,0),
+"white bread": (80,3,15,1,1,25,0.8,0),
+"brown bread": (90,4,17,1,2,30,1.2,0),
+
+"rice": (200,4,44,0,1,15,1.0,0),
+"white rice": (200,4,44,0,1,15,1.0,0),
+"brown rice": (215,5,45,2,3,20,1.2,0),
+
+"oats": (300,10,54,5,4,50,3.5,0),
+"oatmeal": (300,10,54,5,4,50,3.5,0),
+
+"cornflakes": (360,10,84,1,2,10,8,15),
+
+"pasta": (220,8,43,1,2,20,1.2,0),
+
+# ==========================================================
+# BIRYANI & RICE
+# ==========================================================
+
+"biryani": (400,20,45,14,2,60,2.5,5),
+
+"chicken biryani": (420,25,45,14,2,60,2.8,5),
+
+"beef biryani": (450,27,45,16,2,65,3.2,5),
+
+"vegetable biryani": (320,8,55,7,4,70,2.4,15),
+
+"chicken pulao": (390,23,46,10,2,40,2.0,4),
+
+"pulao": (360,10,50,8,2,35,1.5,4),
+
+# ==========================================================
+# BREAKFAST
+# ==========================================================
+
+"omelette": (150,11,2,11,0,50,1.5,0),
+
+"egg": (78,6,0,5,0,25,1.0,0),
+
+"boiled egg": (78,6,0,5,0,25,1.0,0),
+
+"fried egg": (90,6,0,7,0,25,1.0,0),
+
+"scrambled egg": (95,7,1,7,0,28,1.0,0),
+
+# ==========================================================
+# CHICKEN
+# ==========================================================
+
+"chicken": (165,31,0,4,0,15,1.0,0),
+
+"grilled chicken": (165,31,0,4,0,15,1.0,0),
+
+"chicken curry": (280,25,8,16,1,40,2.0,5),
+
+"fried chicken": (320,26,8,20,1,25,1.5,0),
+
+"chicken tikka": (220,32,2,9,0,20,1.5,2),
+
+"chicken karahi": (290,30,5,16,1,35,2.2,5),
+
+# ==========================================================
+# BEEF
+# ==========================================================
+
+"beef": (250,26,0,15,0,18,2.5,0),
+
+"beef curry": (330,28,8,20,1,22,3.5,3),
+
+"beef steak": (270,30,0,17,0,18,2.8,0),
+
+# ==========================================================
+# FISH
+# ==========================================================
+
+"fish": (130,26,0,3,0,30,0.8,0),
+
+"grilled fish": (150,28,0,4,0,35,1.0,0),
+
+"fried fish": (240,24,8,14,0,30,1.0,0),
+# ===== DAIRY =====
+"milk": (150,8,12,8,0,300,0.1,2),
+"yogurt": (100,5,12,3,0,180,0.1,1),
+"dahi": (100,5,12,3,0,180,0.1,1),
+"lassi": (150,6,17,4,0,220,0.1,1),
+"cheese": (110,7,0,9,0,200,0.2,0),
+"paneer": (265,18,4,20,0,480,0.5,0),
+
+# ===== FRUITS =====
+"banana": (90,1,23,0,3,5,0.3,9),
+"apple": (80,0,21,0,4,10,0.1,8),
+"mango": (100,1,25,0,2,2,0.2,36),
+"orange": (60,1,15,0,3,50,0.1,53),
+"almonds": (170,6,6,15,3,75,1.0,0),
+
 }
 
 LUNCH_PROTEIN  = ["Grilled Chicken + Rice + Salad", "Dal + Roti + Yogurt", "Fish + Vegetables + Brown Rice"]
@@ -70,7 +119,66 @@ DINNER_PROTEIN  = ["Chicken Soup + Salad", "Egg Omelette + Vegetables", "Grilled
 DINNER_CARBS    = ["Dal + Brown Rice", "Chicken Curry + Roti", "Vegetable Soup + Bread"]
 DINNER_BALANCED = ["Dal + Roti + Salad", "Chicken + Vegetables + Brown Rice", "Lentil Soup + Egg + Vegetables"]
 
+# Combo drinks: if any of these keywords appear, and the "base" ingredient isn't
+# already explicitly mentioned in the text, silently add the base's nutrition.
+# Using \b word boundaries so we don't accidentally match "milk" inside some
+# unrelated word, or "shake" as a false substring of something else.
+# Every combo automatically expands into its ingredients
 
+COMBO_FOODS = {
+
+"banana shake":["banana","milk"],
+"banana smoothie":["banana","milk"],
+"banana milkshake":["banana","milk"],
+
+"mango shake":["mango","milk"],
+"mango smoothie":["mango","milk"],
+"mango milkshake":["mango","milk"],
+
+"apple shake":["apple","milk"],
+
+"orange shake":["orange","milk"],
+
+"dry fruit shake":["milk","almonds"],
+
+"lassi":["yogurt"],
+
+"tea with milk":["tea","milk"],
+
+"coffee with milk":["coffee","milk"],
+
+"banana milkshake":["banana","milk"],
+"banana shake":["banana","milk"],
+"banana smoothie":["banana","milk"],
+
+"mango milkshake":["mango","milk"],
+"mango shake":["mango","milk"],
+"mango smoothie":["mango","milk"],
+
+"lassi":["yogurt"],
+
+}
+
+QTY_WORDS = {
+
+"half":0.5,
+"¼":0.25,
+"½":0.5,
+"¾":0.75,
+
+"one":1,
+"a":1,
+"an":1,
+
+"two":2,
+"three":3,
+"four":4,
+"five":5,
+
+"double":2,
+"triple":3
+
+}
 def calculate_targets(age, gender, weight, height, activity, goal):
     if gender == "Female":
         bmr = 447.593 + 9.247 * weight + 3.098 * height - 4.330 * age
@@ -106,52 +214,208 @@ def calculate_targets(age, gender, weight, height, activity, goal):
     }
 
 
+def _find_word_boundary(processed_text, food):
+    """Find `food` in `processed_text` on word boundaries only, so short food
+    names (e.g. 'egg', 'tea', 'nuts') don't get falsely matched inside an
+    unrelated longer word. Returns the match object or None."""
+    pattern = r"(?<!\w)" + re.escape(food) + r"(?!\w)"
+    return re.search(pattern, processed_text)
+
+
 def parse_meal(meal_text):
+
     text = meal_text.lower().strip()
-    cal = pro = carb = fat = fiber = calcium = iron = vitc = 0.0
-    matched = []
 
-    for food, vals in FOOD_DB.items():
-        if food in text:
-            qty = 1.0
-            try:
-                idx = text.find(food)
-                before = text[:idx].strip().split()
-                if before:
-                    last = before[-1]
-                    if last.isdigit():
-                        qty = float(last)
-                    elif last in ["half", "½"]:
-                        qty = 0.5
-                    elif last in ["two", "double"]:
-                        qty = 2.0
-                    elif last in ["three"]:
-                        qty = 3.0
-            except Exception:
-                pass
+    # ---------- Normalize ----------
 
-            cal     += vals[0] * qty
-            pro     += vals[1] * qty
-            carb    += vals[2] * qty
-            fat     += vals[3] * qty
-            fiber   += vals[4] * qty
-            calcium += vals[5] * qty
-            iron    += vals[6] * qty
-            vitc    += vals[7] * qty
-            matched.append(food)
+    text = text.replace("-", " ")
+    text = text.replace(",", " ")
+    text = text.replace("/", " ")
 
-    if not matched:
-        cal, pro, carb, fat = 300, 10, 40, 8
-        fiber, calcium, iron, vitc = 3, 50, 1.5, 5
+    text = re.sub(r"\s+", " ", text)
 
-    return {
-        "calories": round(cal), "protein": round(pro, 1),
-        "carbs": round(carb, 1), "fat": round(fat, 1),
-        "fiber": round(fiber, 1), "calcium": round(calcium, 1),
-        "iron": round(iron, 1), "vitc": round(vitc, 1),
-        "matched_foods": matched,
+    calories = 0.0
+    protein = 0.0
+    carbs = 0.0
+    fat = 0.0
+    fiber = 0.0
+    calcium = 0.0
+    iron = 0.0
+    vitc = 0.0
+
+    matched_foods = []
+
+    processed_text = text
+
+    # Longest names first
+    sorted_foods = sorted(
+        FOOD_DB.keys(),
+        key=len,
+        reverse=True,
+    )
+
+    # ====================================================
+    # SMART COMBO EXPANSION
+    # ====================================================
+
+    for combo, ingredients in COMBO_FOODS.items():
+        
+       if combo in processed_text:
+
+        # remove combo words first
+        processed_text += " " + " ".join(ingredients)
+    # ====================================================
+    # COMMON ALIASES
+    # ====================================================
+
+    aliases = {
+
+        "chapatti":"chapati",
+        "chapattis":"chapati",
+
+        "roti":"roti",
+        "rotis":"roti",
+
+        "eggs":"egg",
+
+        "bananas":"banana",
+
+        "mangoes":"mango",
+
+        "apples":"apple",
+
+        "oranges":"orange",
+
+        "milks":"milk",
+
+        "yoghurt":"yogurt",
+
+        "dahi":"yogurt",
+
+        "tea":"chai",
+
     }
 
+    for old,new in aliases.items():
+
+        processed_text = re.sub(
+            rf"\b{old}\b",
+            new,
+            processed_text
+        )
+
+    # ====================================================
+    # QUANTITY NORMALIZATION
+    # ====================================================
+
+    for word,value in QTY_WORDS.items():
+
+        processed_text = re.sub(
+            rf"\b{word}\b",
+            str(value),
+            processed_text
+        )
+            # ====================================================
+    # FOOD DETECTION ENGINE
+    # ====================================================
+
+    while True:
+
+        found = False
+
+        for food in sorted_foods:
+
+            match = _find_word_boundary(processed_text, food)
+
+            if match is None:
+                continue
+
+            found = True
+
+            qty = 1.0
+
+            before = processed_text[:match.start()].strip().split()
+
+            if before:
+
+                last = before[-1]
+
+                # Numeric quantity
+                try:
+                    qty = float(last)
+                except:
+                    pass
+
+            values = FOOD_DB[food]
+
+            calories += values[0] * qty
+            protein += values[1] * qty
+            carbs += values[2] * qty
+            fat += values[3] * qty
+            fiber += values[4] * qty
+            calcium += values[5] * qty
+            iron += values[6] * qty
+            vitc += values[7] * qty
+
+            matched_foods.append(food)
+
+            # Remove matched food so it won't be counted again
+            processed_text = (
+                processed_text[:match.start()]
+                + " "
+                + processed_text[match.end():]
+            )
+
+            break
+
+        if not found:
+            break
+
+    # ====================================================
+    # REMOVE DUPLICATES
+    # ====================================================
+
+    matched_foods = list(dict.fromkeys(matched_foods))
+        # ====================================================
+    # UNKNOWN FOOD FALLBACK
+    # ====================================================
+
+    if len(matched_foods) == 0:
+
+        calories = 300
+        protein = 10
+        carbs = 40
+        fat = 8
+        fiber = 3
+        calcium = 50
+        iron = 1.5
+        vitc = 5
+
+    # ====================================================
+    # RETURN
+    # ====================================================
+
+    return {
+
+        "calories": round(calories),
+
+        "protein": round(protein, 1),
+
+        "carbs": round(carbs, 1),
+
+        "fat": round(fat, 1),
+
+        "fiber": round(fiber, 1),
+
+        "calcium": round(calcium, 1),
+
+        "iron": round(iron, 1),
+
+        "vitc": round(vitc, 1),
+
+        "matched_foods": matched_foods,
+
+    }
 
 def generate_analysis(consumed, targets):
     lines = []

@@ -10,8 +10,7 @@ from mobilenet_model import detect_food
 from history_store import save_history
 from ai_insights import generate_insights
 from weekly_tracker import get_weekly_data
-from gemini_service import get_ingredients, get_ingredients_fallback
-from nutrition_api import get_nutrition, get_ingredients_usda
+from nutrition_api import get_nutrition
 from health_engine import calculate_health_score
 from meal_balance import parse_meal, process_meal_balance
 from nutrition_engine import analyze_meal
@@ -52,10 +51,7 @@ async def analyze(file: UploadFile = File(...)):
 
     food_name = detected[0]
 
-    try:
-        ingredients_text = get_ingredients_usda(food_name) or get_ingredients(food_name) or get_ingredients_fallback(food_name) or ""
-    except Exception:
-        ingredients_text = "Could not fetch ingredients"
+  
 
     local_result = analyze_meal(detected)
     local_total  = local_result["total"]
@@ -80,7 +76,7 @@ async def analyze(file: UploadFile = File(...)):
             return {
                 "error": f"AI analysis failed: {str(e)}",
                 "foods": detected,
-                "ingredients": ingredients_text
+               
             }
     else:
         total             = local_total
@@ -136,46 +132,44 @@ async def analyze(file: UploadFile = File(...)):
     if not warnings:
         warnings.append("✅ Nutritionally balanced meal — great choice!")
 
-    sustainability_score = 80
-    ingredients_text = ingredients_text or ""
-    if "beef" in ingredients_text.lower() or "meat" in ingredients_text.lower():
+        sustainability_score = 80
+    food = food_name.lower()
+
+    if "beef" in food or "steak" in food:
         sustainability_score = 45
-    elif "chicken" in ingredients_text.lower():
+    elif "chicken" in food:
         sustainability_score = 60
-    elif "vegetable" in ingredients_text.lower() or "rice" in ingredients_text.lower():
+    elif "vegetable" in food or "salad" in food or "rice" in food:
         sustainability_score = 75
 
     save_history({
-        "time":         str(datetime.datetime.now()),
-        "foods":        detected,
-        "calories":     calories,
-        "protein":      total["protein"],
-        "carbs":        total["carbs"],
-        "fats":         total["fats"],
+        "time": str(datetime.datetime.now()),
+        "foods": detected,
+        "calories": calories,
+        "protein": total["protein"],
+        "carbs": total["carbs"],
+        "fats": total["fats"],
         "health_score": score
     })
 
     return {
-        "foods":                   detected,
-        "ingredients":             ingredients_text,
-        "nutrition_source":        nutrition_source,
+        "foods": detected,
+        "nutrition_source": nutrition_source,
         "estimated_portion_grams": estimated_portion,
-        "estimated_calories":      calories,
-        "protein":                 total["protein"],
-        "carbs":                   total["carbs"],
-        "fats":                    total["fats"],
-        "fiber":                   total.get("fiber", "N/A"),
-        "sugar":                   total.get("sugar", "N/A"),
-        "sodium":                  total.get("sodium", "N/A"),
-        "health_score":            score,
-        "verdict":                 verdict,
-        "health_notes":            health_notes,
-        "portion_advice":          portion_advice,
-        "sustainability_score":    sustainability_score,
-        "warnings":                warnings
+        "estimated_calories": calories,
+        "protein": total["protein"],
+        "carbs": total["carbs"],
+        "fats": total["fats"],
+        "fiber": total.get("fiber", "N/A"),
+        "sugar": total.get("sugar", "N/A"),
+        "sodium": total.get("sodium", "N/A"),
+        "health_score": score,
+        "verdict": verdict,
+        "health_notes": health_notes,
+        "portion_advice": portion_advice,
+        "sustainability_score": sustainability_score,
+        "warnings": warnings
     }
-
-
 
 # -------------------------------------------------------
 # MEAL BALANCE ENDPOINT

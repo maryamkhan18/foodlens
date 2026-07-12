@@ -1,7 +1,7 @@
 import tensorflow as tf
 import numpy as np
 import json
-from keras.utils import load_img, img_to_array
+from tensorflow.keras.utils import load_img, img_to_array
 
 # Load trained model
 model = tf.keras.models.load_model("model/foodlens_model.keras")
@@ -12,6 +12,7 @@ with open("model/class_names.json", "r") as f:
 
 # Ensure correct order
 class_names = [k for k, v in sorted(class_indices.items(), key=lambda x: x[1])]
+
 
 def detect_food(image_path):
 

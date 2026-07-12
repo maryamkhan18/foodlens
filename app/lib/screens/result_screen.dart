@@ -61,10 +61,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
     final List foods = widget.result["foods"] ?? [];
 
-    final String ingredientsRaw = widget.result["ingredients"]?.toString() ?? "";
-    final List ingredients = ingredientsRaw.isNotEmpty
-        ? ingredientsRaw.split(",").map((e) => e.trim()).toList()
-        : [];
+   
 
     final List warnings = widget.result["warnings"] ?? [];
 
@@ -134,19 +131,7 @@ class _ResultScreenState extends State<ResultScreen> {
 
             const SizedBox(height: 30),
 
-            // INGREDIENTS
-            
            
-                Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: ingredients.map((item) => Chip(
-                      label: Text(item.toString()),
-                      backgroundColor: Colors.orange.shade100,
-                    )).toList(),
-                  ),
-
-            const SizedBox(height: 30),
 
             // NUTRITION
             const Text("Nutrition Information",

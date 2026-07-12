@@ -1,6 +1,6 @@
 import requests
 
-USDA_API_KEY = "DEMO_KEY"
+USDA_API_KEY = "Jpjx05kVTq0Evhoe3TYvySvjZv6Uni05YBsOe79z"
 
 def get_ingredients_usda(food_name):
     """USDA se ingredients/description lo"""

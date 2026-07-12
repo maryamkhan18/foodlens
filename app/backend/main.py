@@ -176,59 +176,6 @@ async def analyze(file: UploadFile = File(...)):
     }
 
 
-# -------------------------------------------------------
-# COMPARE ENDPOINT
-# -------------------------------------------------------
-@app.post("/compare")
-async def compare(file1: UploadFile = File(...), file2: UploadFile = File(...)):
-
-    path1 = f"temp1_{file1.filename}"
-    path2 = f"temp2_{file2.filename}"
-
-    with open(path1, "wb") as buffer:
-        shutil.copyfileobj(file1.file, buffer)
-    with open(path2, "wb") as buffer:
-        shutil.copyfileobj(file2.file, buffer)
-
-    food1 = detect_food(path1)
-    food2 = detect_food(path2)
-
-    os.remove(path1)
-    os.remove(path2)
-
-    async def get_meal_data(foods):
-        if not foods:
-            return {"calories": 0, "protein": 0, "carbs": 0, "fats": 0}, 0
-        local = analyze_meal(foods)["total"]
-        if local["calories"] == 0:
-            gemini_n = get_nutrition(foods[0])
-            factor   = gemini_n.get("estimated_portion_grams", 250) / 100
-            local    = {
-                "calories": round(gemini_n["calories"] * factor),
-                "protein":  round(gemini_n["protein"]  * factor, 1),
-                "carbs":    round(gemini_n["carbs"]    * factor, 1),
-                "fats":     round(gemini_n["fats"]     * factor, 1),
-            }
-        score, _ = calculate_health_score(local)
-        return local, score
-
-    result1, s1 = await get_meal_data(food1)
-    result2, s2 = await get_meal_data(food2)
-
-    if s1 > s2:
-        winner, reason = "Image 1", "Healthier nutritional balance"
-    elif s2 > s1:
-        winner, reason = "Image 2", "Healthier nutritional balance"
-    else:
-        winner, reason = "Tie", "Both meals are nutritionally similar"
-
-    return {
-        "image1": {"foods": food1, "calories": result1["calories"], "health_score": s1},
-        "image2": {"foods": food2, "calories": result2["calories"], "health_score": s2},
-        "winner": winner,
-        "reason": reason
-    }
-
 
 # -------------------------------------------------------
 # MEAL BALANCE ENDPOINT

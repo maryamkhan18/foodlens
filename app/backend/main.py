@@ -5,7 +5,7 @@ import os
 import datetime
 from dietary_router import router as dietary_router
 
-
+from groq_service import analyze_health
 from mobilenet_model import detect_food
 from history_store import save_history
 from ai_insights import generate_insights
@@ -87,52 +87,43 @@ async def analyze(file: UploadFile = File(...)):
         nutrition_source  = "Local Dataset"
         estimated_portion = 250
 
-    score, verdict = calculate_health_score(total)
+    try:
+        ai = analyze_health(food_name, total)
+
+        # Agar AI corrected nutrition bheje
+        if "nutrition" in ai:
+            total = ai["nutrition"]
+
+        score = ai.get("health_score", 70)
+        verdict = ai.get("verdict", "Healthy")
+        portion_advice = ai.get("portion_advice", "")
+        health_notes = ai.get("health_notes", health_notes)
+        warnings = ai.get("warnings", [])
+
+        if not warnings:
+            warnings = ["✅ Nutritionally balanced meal."]
+
+    except Exception as e:
+        print("Groq Error:", e)
+
+        score, verdict = calculate_health_score(total)
+
+        calories = total["calories"]
+
+        if calories < 300:
+            portion_advice = "Light meal, you can add more protein or vegetables."
+        elif calories < 500:
+            portion_advice = "Good portion size."
+        elif calories < 700:
+            portion_advice = "Moderate meal."
+        else:
+            portion_advice = "Heavy meal."
+
+        warnings = ["⚠️ AI health analysis unavailable. Showing estimated analysis."]
 
     calories = total["calories"]
-    if calories < 300:
-        portion_advice = "Light meal, you can add more protein or vegetables."
-    elif calories < 500:
-        portion_advice = "Good portion size, well balanced."
-    elif calories < 700:
-        portion_advice = "Moderate meal, try reducing carbs slightly."
-    else:
-        portion_advice = "Heavy meal! Reduce portion size and fats."
 
-    warnings = []
-    protein   = total.get("protein", 0)
-    fats      = total.get("fats", 0)
-    carbs_val = total.get("carbs", 0)
-    sugar     = total.get("sugar", 0)
-    sodium    = total.get("sodium", 0)
-    fiber     = total.get("fiber", 0)
-
-    if calories > 800:
-        warnings.append(f"⚠️ Very high calories ({calories} kcal) — consider smaller portion")
-    elif calories > 600:
-        warnings.append(f"⚠️ High calorie meal ({calories} kcal) — balance with lighter meals today")
-    if fats > 30:
-        warnings.append(f"⚠️ High fat content ({fats}g) — limit saturated fat intake")
-    elif fats > 20:
-        warnings.append(f"⚠️ Moderate fat content ({fats}g) — watch daily fat limit")
-    if sodium > 800:
-        warnings.append(f"⚠️ Very high sodium ({sodium}mg) — risk of high blood pressure")
-    elif sodium > 500:
-        warnings.append(f"⚠️ High sodium ({sodium}mg) — not good for blood pressure")
-    if sugar > 20:
-        warnings.append(f"⚠️ High sugar ({sugar}g) — risk of blood sugar spike")
-    elif sugar > 12:
-        warnings.append(f"⚠️ Moderate sugar ({sugar}g) — watch daily sugar intake")
-    if carbs_val > 70:
-        warnings.append(f"⚠️ High carbohydrates ({carbs_val}g) — may cause energy crash")
-    if protein < 8:
-        warnings.append(f"⚠️ Low protein ({protein}g) — add lean meat or eggs for balance")
-    if fiber < 2:
-        warnings.append("💡 Low fiber — add vegetables or whole grains for better digestion")
-    if not warnings:
-        warnings.append("✅ Nutritionally balanced meal — great choice!")
-
-        sustainability_score = 80
+    sustainability_score = 80
     food = food_name.lower()
 
     if "beef" in food or "steak" in food:
@@ -170,7 +161,6 @@ async def analyze(file: UploadFile = File(...)):
         "sustainability_score": sustainability_score,
         "warnings": warnings
     }
-
 # -------------------------------------------------------
 # MEAL BALANCE ENDPOINT
 # -------------------------------------------------------

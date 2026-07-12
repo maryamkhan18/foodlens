@@ -8,3 +8,4 @@ pillow
 tensorflow
 ultralytics
 opencv-python-headless
+groq

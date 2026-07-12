@@ -1,7 +1,8 @@
 import tensorflow as tf
 import numpy as np
 import json
-from tensorflow.keras.utils import load_img, img_to_array
+import keras
+from keras.utils import load_img, img_to_array
 
 # Load trained model
 model = tf.keras.models.load_model("model/foodlens_model.keras")

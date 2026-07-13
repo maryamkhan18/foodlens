@@ -241,6 +241,10 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
     final microsConsumed = result!["micros_consumed"] as Map? ?? {};
     final microsTargets = result!["micros_targets"] as Map? ?? {};
 
+    // unrecognized foods — backend se aane wali woh words jo FOOD_DB mein
+    // match nahi hue, isliye unki calories/macros count hi nahi hue
+    final unrecognized = (result!["unrecognized_foods"] as List?) ?? [];
+
     // progress calculate karo
     Map<String, double> progress = {};
     for (var key in targets.keys) {
@@ -286,6 +290,33 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
           progress["fat"] ?? 0,
           Colors.red,
         ),
+
+        // UNRECOGNIZED FOODS WARNING
+        if (unrecognized.isNotEmpty) ...[
+          const SizedBox(height: 12),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(14),
+            decoration: BoxDecoration(
+              color: Colors.orange.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(14),
+              border: Border.all(color: Colors.orange.withOpacity(0.4)),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(Icons.info_outline, color: Colors.orange, size: 20),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Text(
+                    "${unrecognized.join(', ')} — not available in our database, so it's not counted in the totals above.",
+                    style: const TextStyle(fontSize: 13, color: Colors.black87),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
 
         const SizedBox(height: 20),
 

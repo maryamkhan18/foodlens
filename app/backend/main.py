@@ -172,6 +172,7 @@ async def analyze(file: UploadFile = File(...)):
     # ---------------------------------------------------
     # SAVE HISTORY + RETURN (dono cases ke liye common)
     # ---------------------------------------------------
+    print("Saving history...")
     save_history({
         "time": str(datetime.datetime.now()),
         "foods": detected,
@@ -181,7 +182,7 @@ async def analyze(file: UploadFile = File(...)):
         "fats": total["fats"],
         "health_score": score
     })
-
+    print("History saved successfully.")
     return {
         "foods": detected,
         "nutrition_source": nutrition_source,

@@ -71,6 +71,10 @@ FOOD_DB = {
 
 "fried chicken": (320,26,8,20,1,25,1.5,0),
 
+# "tikka" as a standalone word — earlier only "chicken tikka" existed,
+# so a plate like "tikka biryani" silently dropped the tikka's nutrition.
+"tikka": (220,32,2,9,0,20,1.5,2),
+
 "chicken tikka": (220,32,2,9,0,20,1.5,2),
 
 "chicken karahi": (290,30,5,16,1,35,2.2,5),
@@ -372,7 +376,26 @@ def parse_meal(meal_text):
     # ====================================================
 
     matched_foods = list(dict.fromkeys(matched_foods))
-        # ====================================================
+
+    # ====================================================
+    # UNRECOGNIZED WORDS CHECK
+    # ====================================================
+    # After removing all matched foods, whatever meaningful words remain
+    # were never counted in the totals. We surface them so the analysis
+    # doesn't silently pretend the meal was smaller than it actually was.
+
+    STOPWORDS = {
+        "and", "with", "a", "an", "the", "of", "some", "plate", "bowl",
+        "cup", "glass", "piece", "pieces", "serving", "plain",
+    }
+
+    leftover_words = [
+        w for w in re.findall(r"[a-zA-Z]+", processed_text)
+        if w not in STOPWORDS and not w.isdigit()
+    ]
+    unrecognized_foods = list(dict.fromkeys(leftover_words))
+
+    # ====================================================
     # UNKNOWN FOOD FALLBACK
     # ====================================================
 
@@ -411,36 +434,63 @@ def parse_meal(meal_text):
 
         "matched_foods": matched_foods,
 
+        "unrecognized_foods": unrecognized_foods,
+
     }
 
+
 def generate_analysis(consumed, targets):
+    """
+    Realistic single-meal analysis.
+
+    Earlier this only compared consumed calories/macros against the FULL
+    DAY'S target (e.g. 400 kcal out of a 2200 kcal daily target = 18%, so
+    it said "light meal / good start"). That's misleading for something
+    like tikka + biryani, which is a calorie-dense, oily single meal even
+    though it's a small slice of the whole day.
+
+    Now we judge the meal mostly on its own absolute numbers (like a
+    nutritionist looking at "what's on this one plate"), and only use the
+    daily target as secondary context.
+    """
     lines = []
-    cal_pct  = consumed["calories"] / max(targets["calories"], 1) * 100
-    pro_pct  = consumed["protein"]  / max(targets["protein"],  1) * 100
-    carb_pct = consumed["carbs"]    / max(targets["carbs"],    1) * 100
-    fat_pct  = consumed["fat"]      / max(targets["fat"],      1) * 100
 
-    if cal_pct < 20:
-        lines.append("Your meal is light — you still have most of your daily calories remaining.")
-    elif cal_pct < 40:
-        lines.append("Good start! About a third of your daily calories consumed.")
+    calories = consumed["calories"]
+    protein = consumed["protein"]
+    carbs = consumed["carbs"]
+    fat = consumed["fat"]
+
+    cal_pct = calories / max(targets["calories"], 1) * 100
+
+    # ---- Absolute, per-meal calorie judgement (this is the main signal) ----
+    if calories < 250:
+        lines.append(f"This is a light meal ({calories} kcal).")
+    elif calories < 450:
+        lines.append(f"This is a moderate, well-portioned meal ({calories} kcal).")
+    elif calories < 650:
+        lines.append(f"This is a fairly rich meal ({calories} kcal) — go lighter on your next meal.")
     else:
-        lines.append("This meal is quite calorie-dense. Lighter meals ahead are recommended.")
+        lines.append(f"This is a heavy, calorie-dense meal ({calories} kcal) — try smaller portions next time.")
 
-    if pro_pct < 25:
-        lines.append("Protein intake is low — prioritize protein-rich foods in next meals.")
-    elif pro_pct > 60:
-        lines.append("Great protein intake from this meal!")
-    else:
-        lines.append("Protein is moderate — continue with protein-rich lunch and dinner.")
+    # ---- Fat / oiliness check (biryani, tikka, fried items etc.) ----
+    if fat > 25:
+        lines.append(f"It's also quite high in fat ({fat}g), likely from oil/ghee used in cooking — balance with lighter, low-fat meals for the rest of the day.")
+    elif fat > 15:
+        lines.append(f"Moderate fat content ({fat}g) — fine occasionally, but don't stack it with more fried/oily food today.")
 
-    if carb_pct > 50:
-        lines.append("Carbohydrate-heavy meal. Balance with proteins and healthy fats.")
-    elif carb_pct < 15:
-        lines.append("Low carb meal — include energy-giving foods during the day.")
+    # ---- Protein check ----
+    if protein < 10:
+        lines.append("Protein is on the lower side for a full meal — consider adding chicken, eggs, or lentils.")
+    elif protein > 30:
+        lines.append("Good protein content in this meal.")
 
-    if fat_pct < 20:
-        lines.append("Healthy fats are low. Include nuts, seeds, or olive oil in later meals.")
+    # ---- Carb check ----
+    if carbs > 60:
+        lines.append(f"Carb-heavy meal ({carbs}g) — mainly from rice/bread — pair with protein and vegetables to avoid an energy crash later.")
+
+    # ---- Daily context (secondary, framed correctly) ----
+    if cal_pct >= 30:
+        lines.append(f"This single meal already covers about {round(cal_pct)}% of your daily calorie target, so plan the rest of the day accordingly.")
 
     return " ".join(lines)
 
@@ -501,4 +551,5 @@ def process_meal_balance(profile: dict, meal_input: str) -> dict:
         "lunch_suggestions": lunch,
         "dinner_suggestions": dinner,
         "matched_foods": consumed.get("matched_foods", []),
+        "unrecognized_foods": consumed.get("unrecognized_foods", []),
     }

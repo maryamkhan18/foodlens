@@ -95,37 +95,29 @@ def get_nutrition(food_name):
 def get_fallback_nutrition(food_name):
     # Values are approximate, per typical single-serving portion (~250g unless noted)
     FALLBACK = {
-        "bbq": {"calories": 280, "protein": 22, "carbs": 5, "fats": 20, "fiber": 1, "sugar": 1, "sodium": 550},
-        "biryani": {"calories": 290, "protein": 12, "carbs": 40, "fats": 10, "fiber": 2, "sugar": 2, "sodium": 450},
-        "burger": {"calories": 295, "protein": 17, "carbs": 24, "fats": 14, "fiber": 1, "sugar": 5, "sodium": 600},
-        "cake": {"calories": 350, "protein": 5, "carbs": 50, "fats": 15, "fiber": 1, "sugar": 35, "sodium": 300},
-        "chaat": {"calories": 180, "protein": 5, "carbs": 30, "fats": 6, "fiber": 4, "sugar": 8, "sodium": 500},
-        "chicken curry": {"calories": 250, "protein": 20, "carbs": 8, "fats": 15, "fiber": 2, "sugar": 3, "sodium": 600},
-        "chinese": {"calories": 320, "protein": 12, "carbs": 45, "fats": 10, "fiber": 2, "sugar": 5, "sodium": 700},
-        "dessert": {"calories": 300, "protein": 4, "carbs": 45, "fats": 12, "fiber": 1, "sugar": 30, "sodium": 150},
-        "french-fries": {"calories": 312, "protein": 3.4, "carbs": 41, "fats": 15, "fiber": 3.8, "sugar": 0.3, "sodium": 210},
-        "french fries": {"calories": 312, "protein": 3.4, "carbs": 41, "fats": 15, "fiber": 3.8, "sugar": 0.3, "sodium": 210},
-        "haleem": {"calories": 280, "protein": 18, "carbs": 25, "fats": 12, "fiber": 3, "sugar": 1, "sodium": 550},
-        "jalebi": {"calories": 350, "protein": 2, "carbs": 60, "fats": 12, "fiber": 0.5, "sugar": 50, "sodium": 50},
-        "karahi": {"calories": 320, "protein": 22, "carbs": 8, "fats": 22, "fiber": 1, "sugar": 2, "sodium": 600},
-        "kebab": {"calories": 250, "protein": 22, "carbs": 5, "fats": 16, "fiber": 1, "sugar": 1, "sodium": 500},
-        "nihari": {"calories": 300, "protein": 20, "carbs": 10, "fats": 20, "fiber": 1, "sugar": 1, "sodium": 650},
-        "omelette": {"calories": 155, "protein": 11, "carbs": 1.6, "fats": 12, "fiber": 0, "sugar": 0.6, "sodium": 250},
-        "paratha": {"calories": 260, "protein": 6, "carbs": 30, "fats": 13, "fiber": 2, "sugar": 1, "sodium": 350},
-        "pizza": {"calories": 266, "protein": 11, "carbs": 33, "fats": 10, "fiber": 2, "sugar": 4, "sodium": 550},
-        "pulao": {"calories": 240, "protein": 8, "carbs": 40, "fats": 6, "fiber": 1.5, "sugar": 1, "sodium": 400},
-        "qorma": {"calories": 300, "protein": 18, "carbs": 10, "fats": 22, "fiber": 1, "sugar": 2, "sodium": 550},
-        "sandwich": {"calories": 250, "protein": 10, "carbs": 30, "fats": 9, "fiber": 2, "sugar": 3, "sodium": 450},
-        "snack": {"calories": 260, "protein": 5, "carbs": 28, "fats": 14, "fiber": 2, "sugar": 2, "sodium": 400},
-
-        # ---- purani entries bhi rakhi hain (extra coverage ke liye) ----
-        "nasi goreng": {"calories": 250, "protein": 8, "carbs": 35, "fats": 10, "fiber": 2, "sugar": 3, "sodium": 500},
-        "fried rice": {"calories": 250, "protein": 8, "carbs": 35, "fats": 10, "fiber": 2, "sugar": 3, "sodium": 500},
-        "chicken": {"calories": 200, "protein": 25, "carbs": 0, "fats": 12, "fiber": 0, "sugar": 0, "sodium": 300},
-        "rice": {"calories": 130, "protein": 3, "carbs": 28, "fats": 1, "fiber": 1, "sugar": 0, "sodium": 10},
-
-        "default": {"calories": 300, "protein": 10, "carbs": 35, "fats": 12, "fiber": 2, "sugar": 5, "sodium": 400},
-    }
+    "bbq": {"calories": 420, "protein": 38, "carbs": 6, "fats": 28, "fiber": 0},
+    "biryani": {"calories": 520, "protein": 20, "carbs": 63, "fats": 20, "fiber": 3},
+    "burger": {"calories": 540, "protein": 26, "carbs": 42, "fats": 30, "fiber": 3},
+    "cake": {"calories": 360, "protein": 5, "carbs": 48, "fats": 17, "fiber": 1},
+    "chaat": {"calories": 320, "protein": 8, "carbs": 46, "fats": 12, "fiber": 7},
+    "chicken curry": {"calories": 390, "protein": 30, "carbs": 8, "fats": 26, "fiber": 2},
+    "chinese": {"calories": 610, "protein": 22, "carbs": 70, "fats": 24, "fiber": 4},
+    "dessert": {"calories": 350, "protein": 5, "carbs": 50, "fats": 15, "fiber": 1},
+    "french-fries": {"calories": 365, "protein": 4, "carbs": 48, "fats": 17, "fiber": 4},
+    "french fries": {"calories": 365, "protein": 4, "carbs": 48, "fats": 17, "fiber": 4},
+    "haleem": {"calories": 430, "protein": 24, "carbs": 32, "fats": 22, "fiber": 5},
+    "jalebi": {"calories": 420, "protein": 3, "carbs": 78, "fats": 12, "fiber": 0},
+    "karahi": {"calories": 460, "protein": 36, "carbs": 7, "fats": 31, "fiber": 1},
+    "kebab": {"calories": 310, "protein": 24, "carbs": 3, "fats": 22, "fiber": 0},
+    "nihari": {"calories": 500, "protein": 28, "carbs": 9, "fats": 38, "fiber": 1},
+    "omelette": {"calories": 220, "protein": 14, "carbs": 2, "fats": 17, "fiber": 0},
+    "paratha": {"calories": 330, "protein": 7, "carbs": 38, "fats": 16, "fiber": 3},
+    "pizza": {"calories": 430, "protein": 18, "carbs": 48, "fats": 18, "fiber": 3},
+    "pulao": {"calories": 410, "protein": 14, "carbs": 55, "fats": 14, "fiber": 2},
+    "qorma": {"calories": 470, "protein": 28, "carbs": 9, "fats": 35, "fiber": 1},
+    "sandwich": {"calories": 360, "protein": 18, "carbs": 34, "fats": 16, "fiber": 3},
+    "snack": {"calories": 280, "protein": 6, "carbs": 32, "fats": 14, "fiber": 2},
+}
     key = food_name.lower().strip()
     for k, v in FALLBACK.items():
         if k in key or key in k:

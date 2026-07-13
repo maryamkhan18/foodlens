@@ -67,8 +67,7 @@ async def analyze(file: UploadFile = File(...)):
                 "carbs": round(gemini_nutrition["carbs"], 1),
                 "fats": round(gemini_nutrition["fats"], 1),
                 "fiber": round(gemini_nutrition.get("fiber", 0), 1),
-                "sugar": round(gemini_nutrition.get("sugar", 0), 1),
-                "sodium": round(gemini_nutrition.get("sodium", 0)),
+               
             }
             health_notes = gemini_nutrition.get("health_notes", "")
             nutrition_source = "AI Analysis"

@@ -43,8 +43,6 @@ class _ResultScreenState extends State<ResultScreen> {
         "carbs": widget.result["carbs"] ?? 0,
         "fats": widget.result["fats"] ?? 0,
         "fiber": widget.result["fiber"] ?? 0,
-        "sugar": widget.result["sugar"] ?? 0,
-        "sodium": widget.result["sodium"] ?? 0,
         "health_score": widget.result["health_score"] ?? 0,
         "verdict": widget.result["verdict"]?.toString() ?? "",
         "portion_advice": widget.result["portion_advice"]?.toString() ?? "",
@@ -70,8 +68,6 @@ class _ResultScreenState extends State<ResultScreen> {
     final String carbs = widget.result["carbs"]?.toString() ?? "0";
     final String fats = widget.result["fats"]?.toString() ?? "0";
     final String fiber = widget.result["fiber"]?.toString() ?? "0";
-    final String sugar = widget.result["sugar"]?.toString() ?? "0";
-    final String sodium = widget.result["sodium"]?.toString() ?? "0";
     final String healthScore = widget.result["health_score"]?.toString() ?? "0";
     final String verdict = widget.result["verdict"]?.toString() ?? "Unknown";
     final String portionAdvice = widget.result["portion_advice"]?.toString() ?? "";
@@ -142,10 +138,8 @@ class _ResultScreenState extends State<ResultScreen> {
             buildCard("🍚 Carbs", "${carbs}g"),
             buildCard("🧈 Fats", "${fats}g"),
             buildCard("🌾 Fiber", "${fiber}g"),
-            buildCard("🍬 Sugar", "${sugar}g"),
-            buildCard("🧂 Sodium", "${sodium}mg"),
-
-            const SizedBox(height: 30),
+            
+             const SizedBox(height: 30),
 
             // HEALTH SCORE
             Container(

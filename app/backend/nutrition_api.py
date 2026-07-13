@@ -1,6 +1,7 @@
 import requests
 
-USDA_API_KEY = "JClkVsKljgDLJIqmXIf3bwYeWUEf3ijqbQNvmYCf"
+USDA_API_KEY = "hxfZXehsbrJfKwKgzC0FQgZnExBjLDnuRfVTwn9w"
+
 
 
 def get_ingredients_usda(food_name):

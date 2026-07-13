@@ -37,7 +37,6 @@ class _MainNavigationState extends State<MainNavigation> {
           BottomNavigationBarItem(icon: Icon(Icons.history), label: "History"),
           BottomNavigationBarItem(icon: Icon(Icons.bar_chart), label: "Tracker"),
           BottomNavigationBarItem(icon: Icon(Icons.psychology), label: "Insights"),
-          BottomNavigationBarItem(icon: Icon(Icons.compare), label: "Compare"),
         ],
       ),
     );

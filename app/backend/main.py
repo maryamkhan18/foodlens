@@ -88,22 +88,12 @@ async def analyze(file: UploadFile = File(...)):
         estimated_portion = 250
 
     # ---------------------------------------------------
-    # HEALTH ANALYSIS (Groq AI with fallback)
+    # HEALTH ANALYSIS
     # ---------------------------------------------------
     calories = total["calories"]
-    sustainability_score = 80
-    food = food_name.lower()
 
-    if "beef" in food or "steak" in food:
-        sustainability_score = 45
-    elif "chicken" in food:
-        sustainability_score = 60
-    elif "vegetable" in food or "salad" in food or "rice" in food:
-        sustainability_score = 75
-
-        score, verdict = calculate_health_score(total)
-
-    calories = total["calories"]
+    # health score hamesha yahan calculate hoga, koi condition nahi
+    score, verdict = calculate_health_score(total)
 
     if calories < 300:
         portion_advice = "Light meal, you can add more protein or vegetables."
@@ -146,6 +136,7 @@ async def analyze(file: UploadFile = File(...)):
     if not warnings:
         warnings.append("✅ Nutritionally balanced meal.")
 
+    # sustainability_score sirf food type pe depend karta hai, health score se koi lena dena nahi
     sustainability_score = 80
     food = food_name.lower()
 
@@ -155,24 +146,10 @@ async def analyze(file: UploadFile = File(...)):
         sustainability_score = 60
     elif "vegetable" in food or "salad" in food or "rice" in food:
         sustainability_score = 75
-        # Fallback
-        score, verdict = calculate_health_score(total)
-
-        if calories < 300:
-            portion_advice = "Light meal, you can add more protein or vegetables."
-        elif calories < 500:
-            portion_advice = "Good portion size."
-        elif calories < 700:
-            portion_advice = "Moderate meal."
-        else:
-            portion_advice = "Heavy meal."
-
-        warnings = ["⚠️ AI health analysis unavailable. Showing estimated analysis."]
 
     # ---------------------------------------------------
     # SAVE HISTORY + RETURN (dono cases ke liye common)
     # ---------------------------------------------------
-    print("Saving history...")
     save_history({
         "time": str(datetime.datetime.now()),
         "foods": detected,
@@ -182,7 +159,7 @@ async def analyze(file: UploadFile = File(...)):
         "fats": total["fats"],
         "health_score": score
     })
-    print("History saved successfully.")
+
     return {
         "foods": detected,
         "nutrition_source": nutrition_source,

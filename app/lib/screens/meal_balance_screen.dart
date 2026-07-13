@@ -245,12 +245,19 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
     // match nahi hue, isliye unki calories/macros count hi nahi hue
     final unrecognized = (result!["unrecognized_foods"] as List?) ?? [];
 
-    // progress calculate karo
+    // Backend sends the string "Not available" instead of a number when it
+    // couldn't recognize ANY food in the meal at all — check that first so
+    // we don't try to parse a string as a double and crash.
+    final bool recognized = consumed["calories"] is num;
+
+    // progress calculate karo (sirf jab recognized ho)
     Map<String, double> progress = {};
-    for (var key in targets.keys) {
-      double t = double.tryParse(targets[key].toString()) ?? 1;
-      double c = double.tryParse(consumed[key]?.toString() ?? "0") ?? 0;
-      progress[key.toString()] = t > 0 ? (c / t * 100).clamp(0, 100) : 0;
+    if (recognized) {
+      for (var key in targets.keys) {
+        double t = double.tryParse(targets[key].toString()) ?? 1;
+        double c = double.tryParse(consumed[key]?.toString() ?? "0") ?? 0;
+        progress[key.toString()] = t > 0 ? (c / t * 100).clamp(0, 100) : 0;
+      }
     }
 
     return Column(
@@ -262,34 +269,41 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 12),
-        _macroRow(
-          "🔥 Calories",
-          targets["calories"],
-          consumed["calories"],
-          progress["calories"] ?? 0,
-          Colors.orange,
-        ),
-        _macroRow(
-          "💪 Protein",
-          targets["protein"],
-          consumed["protein"],
-          progress["protein"] ?? 0,
-          Colors.blue,
-        ),
-        _macroRow(
-          "🍚 Carbs",
-          targets["carbs"],
-          consumed["carbs"],
-          progress["carbs"] ?? 0,
-          Colors.amber,
-        ),
-        _macroRow(
-          "🧈 Fat",
-          targets["fat"],
-          consumed["fat"],
-          progress["fat"] ?? 0,
-          Colors.red,
-        ),
+
+        if (!recognized) ...[
+          _notAvailableCard(
+            "We couldn't recognize this meal in our food database, so calories and macros aren't available for it.",
+          ),
+        ] else ...[
+          _macroRow(
+            "🔥 Calories",
+            targets["calories"],
+            consumed["calories"],
+            progress["calories"] ?? 0,
+            Colors.orange,
+          ),
+          _macroRow(
+            "💪 Protein",
+            targets["protein"],
+            consumed["protein"],
+            progress["protein"] ?? 0,
+            Colors.blue,
+          ),
+          _macroRow(
+            "🍚 Carbs",
+            targets["carbs"],
+            consumed["carbs"],
+            progress["carbs"] ?? 0,
+            Colors.amber,
+          ),
+          _macroRow(
+            "🧈 Fat",
+            targets["fat"],
+            consumed["fat"],
+            progress["fat"] ?? 0,
+            Colors.red,
+          ),
+        ],
 
         // UNRECOGNIZED FOODS WARNING
         if (unrecognized.isNotEmpty) ...[
@@ -320,62 +334,63 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
 
         const SizedBox(height: 20),
 
-        // MICROS
-        const Text(
-          "Micronutrients",
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 12),
-        _macroRow(
-          "🌾 Fiber",
-          microsTargets["fiber_g"],
-          microsConsumed["fiber_g"],
-          microsTargets["fiber_g"] != null
-              ? ((microsConsumed["fiber_g"] ?? 0) /
-                        microsTargets["fiber_g"] *
-                        100)
-                    .clamp(0, 100)
-              : 0,
-          Colors.green,
-        ),
-        _macroRow(
-          "🦴 Calcium",
-          microsTargets["calcium_mg"],
-          microsConsumed["calcium_mg"],
-          microsTargets["calcium_mg"] != null
-              ? ((microsConsumed["calcium_mg"] ?? 0) /
-                        microsTargets["calcium_mg"] *
-                        100)
-                    .clamp(0, 100)
-              : 0,
-          Colors.teal,
-        ),
-        _macroRow(
-          "🩸 Iron",
-          microsTargets["iron_mg"],
-          microsConsumed["iron_mg"],
-          microsTargets["iron_mg"] != null
-              ? ((microsConsumed["iron_mg"] ?? 0) /
-                        microsTargets["iron_mg"] *
-                        100)
-                    .clamp(0, 100)
-              : 0,
-          Colors.brown,
-        ),
-        _macroRow(
-          "🍊 Vitamin C",
-          microsTargets["vitc_mg"],
-          microsConsumed["vitc_mg"],
-          microsTargets["vitc_mg"] != null
-              ? ((microsConsumed["vitc_mg"] ?? 0) /
-                        microsTargets["vitc_mg"] *
-                        100)
-                    .clamp(0, 100)
-              : 0,
-          Colors.deepOrange,
-        ),
-
-        const SizedBox(height: 20),
+        // MICROS (only shown when the meal was actually recognized)
+        if (recognized) ...[
+          const Text(
+            "Micronutrients",
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+          _macroRow(
+            "🌾 Fiber",
+            microsTargets["fiber_g"],
+            microsConsumed["fiber_g"],
+            microsTargets["fiber_g"] != null
+                ? ((microsConsumed["fiber_g"] ?? 0) /
+                          microsTargets["fiber_g"] *
+                          100)
+                      .clamp(0, 100)
+                : 0,
+            Colors.green,
+          ),
+          _macroRow(
+            "🦴 Calcium",
+            microsTargets["calcium_mg"],
+            microsConsumed["calcium_mg"],
+            microsTargets["calcium_mg"] != null
+                ? ((microsConsumed["calcium_mg"] ?? 0) /
+                          microsTargets["calcium_mg"] *
+                          100)
+                      .clamp(0, 100)
+                : 0,
+            Colors.teal,
+          ),
+          _macroRow(
+            "🩸 Iron",
+            microsTargets["iron_mg"],
+            microsConsumed["iron_mg"],
+            microsTargets["iron_mg"] != null
+                ? ((microsConsumed["iron_mg"] ?? 0) /
+                          microsTargets["iron_mg"] *
+                          100)
+                      .clamp(0, 100)
+                : 0,
+            Colors.brown,
+          ),
+          _macroRow(
+            "🍊 Vitamin C",
+            microsTargets["vitc_mg"],
+            microsConsumed["vitc_mg"],
+            microsTargets["vitc_mg"] != null
+                ? ((microsConsumed["vitc_mg"] ?? 0) /
+                          microsTargets["vitc_mg"] *
+                          100)
+                      .clamp(0, 100)
+                : 0,
+            Colors.deepOrange,
+          ),
+          const SizedBox(height: 20),
+        ],
 
         // ANALYSIS
         const Text(
@@ -417,6 +432,31 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
 
         const SizedBox(height: 30),
       ],
+    );
+  }
+
+  Widget _notAvailableCard(String message) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.grey.shade200,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.grey.shade400),
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Icon(Icons.block, color: Colors.grey, size: 20),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              message,
+              style: const TextStyle(fontSize: 14, color: Colors.black54),
+            ),
+          ),
+        ],
+      ),
     );
   }
 

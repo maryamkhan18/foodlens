@@ -1,4 +1,5 @@
 import re
+import random
 
 # ── Nutrition Database ────────────────────────────────────────────
 # tuple format: (calories, protein_g, carbs_g, fat_g, fiber_g, calcium_mg, iron_mg, vitc_mg)
@@ -115,14 +116,6 @@ FOOD_DB = {
 
 }
 
-LUNCH_PROTEIN  = ["Grilled Chicken + Rice + Salad", "Dal + Roti + Yogurt", "Fish + Vegetables + Brown Rice"]
-LUNCH_CARBS    = ["Chicken Pulao + Salad", "Beef Curry + Naan", "Vegetable Biryani + Raita"]
-LUNCH_BALANCED = ["Dal + Roti + Sabzi + Yogurt", "Grilled Fish + Rice + Salad", "Lentil Soup + Brown Bread + Vegetables"]
-
-DINNER_PROTEIN  = ["Chicken Soup + Salad", "Egg Omelette + Vegetables", "Grilled Fish + Steamed Vegetables"]
-DINNER_CARBS    = ["Dal + Brown Rice", "Chicken Curry + Roti", "Vegetable Soup + Bread"]
-DINNER_BALANCED = ["Dal + Roti + Salad", "Chicken + Vegetables + Brown Rice", "Lentil Soup + Egg + Vegetables"]
-
 # Combo drinks: if any of these keywords appear, and the "base" ingredient isn't
 # already explicitly mentioned in the text, silently add the base's nutrition.
 # Using \b word boundaries so we don't accidentally match "milk" inside some
@@ -177,6 +170,69 @@ QTY_WORDS = {
 "triple":3
 
 }
+
+# ── Suggestion Pools ──────────────────────────────────────────────
+# Built from the actual dishes in FOOD_DB (plus common sides that aren't
+# tracked nutritionally but are realistic pairings). These pools are
+# intentionally bigger and more varied than a fixed 3-item list, so lunch
+# and dinner suggestions differ each time and don't repeat what the user
+# just ate.
+
+PROTEIN_FOCUS_POOL = [
+    "Grilled Chicken + Brown Rice + Salad",
+    "Chicken Tikka + Roti + Raita",
+    "Grilled Fish + Steamed Vegetables + Brown Rice",
+    "Boiled Eggs + Whole Wheat Toast + Salad",
+    "Paneer Tikka + Roti + Cucumber Raita",
+    "Chicken Curry + Brown Rice + Salad",
+    "Beef Steak + Steamed Vegetables + Salad",
+    "Fish Curry + Brown Rice + Vegetables",
+    "Chicken Karahi + Roti + Salad",
+    "Grilled Chicken + Lentil Soup (Dal) + Salad",
+    "Egg White Omelette + Whole Wheat Toast",
+    "Beef Curry + Roti + Salad",
+    "Grilled Fish + Quinoa + Steamed Greens",
+    "Chicken Tikka + Lentil Soup (Dal) + Salad",
+]
+
+CARB_FOCUS_POOL = [
+    "Chicken Biryani + Raita + Salad",
+    "Vegetable Biryani + Yogurt",
+    "Chicken Pulao + Salad",
+    "Beef Biryani + Raita",
+    "Plain Rice + Chicken Curry + Salad",
+    "Naan + Chicken Curry + Salad",
+    "Whole Wheat Pasta + Grilled Chicken",
+    "Vegetable Pulao + Yogurt",
+    "Paratha + Omelette + Yogurt",
+    "Rice + Beef Curry + Salad",
+    "Naan + Chicken Karahi + Salad",
+]
+
+BALANCED_POOL = [
+    "Dal + Roti + Sabzi + Yogurt",
+    "Grilled Fish + Rice + Salad",
+    "Lentil Soup (Dal) + Brown Bread + Vegetables",
+    "Chicken Curry + Roti + Salad",
+    "Vegetable Biryani + Raita",
+    "Grilled Chicken + Vegetables + Brown Rice",
+    "Egg Curry + Roti + Salad",
+    "Fish + Steamed Vegetables + Rice",
+    "Paneer + Roti + Salad",
+    "Beef Curry + Brown Rice + Vegetables",
+    "Chicken Pulao + Cucumber Raita",
+    "Oatmeal + Boiled Eggs + Fruit",
+]
+
+# Keywords used to detect whether a suggestion overlaps with what the
+# user already ate, so we can avoid repeating the same protein/dish twice
+# in one day.
+_VARIETY_KEYWORDS = [
+    "chicken", "beef", "fish", "paneer", "egg", "biryani", "pulao",
+    "tikka", "karahi",
+]
+
+
 def calculate_targets(age, gender, weight, height, activity, goal):
     if gender == "Female":
         bmr = 447.593 + 9.247 * weight + 3.098 * height - 4.330 * age
@@ -398,17 +454,32 @@ def parse_meal(meal_text):
     # ====================================================
     # UNKNOWN FOOD FALLBACK
     # ====================================================
+    # If NOTHING in the text matched any food in our database, we no longer
+    # invent a fake guess (the old "assume 300 kcal" behaviour). That silently
+    # lied to the user about what they ate. Instead we flag the meal as
+    # "not recognized" so the caller can honestly show "Not available"
+    # instead of a made-up number.
 
-    if len(matched_foods) == 0:
+    recognized = len(matched_foods) > 0
 
-        calories = 300
-        protein = 10
-        carbs = 40
-        fat = 8
-        fiber = 3
-        calcium = 50
-        iron = 1.5
-        vitc = 5
+    if not recognized:
+
+        return {
+
+            "calories": None,
+            "protein": None,
+            "carbs": None,
+            "fat": None,
+            "fiber": None,
+            "calcium": None,
+            "iron": None,
+            "vitc": None,
+
+            "matched_foods": matched_foods,
+            "unrecognized_foods": unrecognized_foods,
+            "recognized": False,
+
+        }
 
     # ====================================================
     # RETURN
@@ -436,6 +507,8 @@ def parse_meal(meal_text):
 
         "unrecognized_foods": unrecognized_foods,
 
+        "recognized": True,
+
     }
 
 
@@ -443,26 +516,44 @@ def generate_analysis(consumed, targets):
     """
     Realistic single-meal analysis.
 
-    Earlier this only compared consumed calories/macros against the FULL
-    DAY'S target (e.g. 400 kcal out of a 2200 kcal daily target = 18%, so
-    it said "light meal / good start"). That's misleading for something
-    like tikka + biryani, which is a calorie-dense, oily single meal even
-    though it's a small slice of the whole day.
-
-    Now we judge the meal mostly on its own absolute numbers (like a
-    nutritionist looking at "what's on this one plate"), and only use the
-    daily target as secondary context.
+    Judges the meal mostly on its own absolute numbers (like a nutritionist
+    looking at "what's on this one plate"), then adds micronutrient context
+    (fiber/calcium/iron/vitamin C) using a fair one-meal share (~1/3 of the
+    daily target) rather than just the calorie % of the whole day.
     """
+
+    # ---- Meal wasn't recognized at all: say so plainly, no fake numbers ----
+    if not consumed.get("recognized", True):
+        unrecog = consumed.get("unrecognized_foods", [])
+        if unrecog:
+            items = ", ".join(f"'{w}'" for w in unrecog)
+            return (
+                f"We couldn't find {items} in our food database, so we can't "
+                "calculate accurate nutrition for this meal. Try describing it "
+                "with more common food names (e.g. roti, rice, chicken, egg), "
+                "or log the individual ingredients instead."
+            )
+        return (
+            "We couldn't recognize this meal in our food database, so we "
+            "can't calculate accurate nutrition for it. Try describing it "
+            "with more common food names, or log the individual ingredients "
+            "instead."
+        )
+
     lines = []
 
     calories = consumed["calories"]
     protein = consumed["protein"]
     carbs = consumed["carbs"]
     fat = consumed["fat"]
+    fiber = consumed.get("fiber", 0)
+    calcium = consumed.get("calcium", 0)
+    iron = consumed.get("iron", 0)
+    vitc = consumed.get("vitc", 0)
 
     cal_pct = calories / max(targets["calories"], 1) * 100
 
-    # ---- Absolute, per-meal calorie judgement (this is the main signal) ----
+    # ---- Absolute, per-meal calorie judgement (main signal) ----
     if calories < 250:
         lines.append(f"This is a light meal ({calories} kcal).")
     elif calories < 450:
@@ -472,7 +563,7 @@ def generate_analysis(consumed, targets):
     else:
         lines.append(f"This is a heavy, calorie-dense meal ({calories} kcal) — try smaller portions next time.")
 
-    # ---- Fat / oiliness check (biryani, tikka, fried items etc.) ----
+    # ---- Fat / oiliness check ----
     if fat > 25:
         lines.append(f"It's also quite high in fat ({fat}g), likely from oil/ghee used in cooking — balance with lighter, low-fat meals for the rest of the day.")
     elif fat > 15:
@@ -480,7 +571,7 @@ def generate_analysis(consumed, targets):
 
     # ---- Protein check ----
     if protein < 10:
-        lines.append("Protein is on the lower side for a full meal — consider adding chicken, eggs, or lentils.")
+        lines.append("Protein is on the lower side for a full meal — consider adding chicken, eggs, fish, or lentils.")
     elif protein > 30:
         lines.append("Good protein content in this meal.")
 
@@ -488,20 +579,98 @@ def generate_analysis(consumed, targets):
     if carbs > 60:
         lines.append(f"Carb-heavy meal ({carbs}g) — mainly from rice/bread — pair with protein and vegetables to avoid an energy crash later.")
 
-    # ---- Daily context (secondary, framed correctly) ----
+    # ---- Micronutrients: judge against a fair one-meal share (~1/3 of the day) ----
+    fiber_share = targets.get("fiber", 30) / 3
+    calcium_share = targets.get("calcium", 1000) / 3
+    iron_share = targets.get("iron", 10) / 3
+    vitc_share = targets.get("vitc", 80) / 3
+
+    if fiber < fiber_share * 0.4:
+        lines.append("Fiber is low for this meal — add a side salad, vegetables, or whole grains.")
+
+    if calcium < calcium_share * 0.4:
+        lines.append("Calcium is low — a glass of milk, yogurt, or some paneer would help.")
+
+    if iron < iron_share * 0.4:
+        lines.append("Iron is low in this meal — beef, spinach, or lentils are good sources to add later today.")
+
+    if vitc < vitc_share * 0.4:
+        lines.append("Vitamin C is missing — a piece of fruit (orange, mango) or fresh salad would balance this out.")
+
+    # ---- Daily context (secondary framing, not the main verdict) ----
     if cal_pct >= 30:
         lines.append(f"This single meal already covers about {round(cal_pct)}% of your daily calorie target, so plan the rest of the day accordingly.")
 
     return " ".join(lines)
 
 
-def get_suggestions(remaining):
+def _pick_suggestions(pool, count, exclude_keywords=None, avoid=None):
+    """Randomly pick `count` unique suggestions from `pool`.
+    - exclude_keywords: skip items containing any of these words (used to
+      avoid repeating what the user just ate, e.g. don't suggest more
+      chicken dishes right after a chicken meal — if that leaves too few
+      options, we fall back to the full pool so we always return something).
+    - avoid: items already chosen elsewhere (e.g. lunch picks, so dinner
+      doesn't repeat them).
+    """
+    exclude_keywords = exclude_keywords or []
+    avoid = avoid or []
+
+    candidates = [item for item in pool if item not in avoid]
+
+    if exclude_keywords:
+        filtered = [
+            item for item in candidates
+            if not any(kw in item.lower() for kw in exclude_keywords)
+        ]
+        # only use the filtered (variety-aware) list if it still leaves
+        # enough choices; otherwise fall back so we don't run dry
+        if len(filtered) >= count:
+            candidates = filtered
+
+    random.shuffle(candidates)
+    return candidates[:count]
+
+
+def get_suggestions(remaining, matched_foods=None):
+    """
+    Builds varied lunch + dinner suggestions from bigger pools (instead of
+    a fixed 3-item list), chosen based on what macro the user still needs
+    most, and avoids repeating dishes similar to what they just ate.
+    """
+    matched_foods = matched_foods or []
+    matched_lower = [f.lower() for f in matched_foods]
+
+    eaten_keywords = [
+        kw for kw in _VARIETY_KEYWORDS
+        if any(kw in food for food in matched_lower)
+    ]
+
+    # "tikka" / "karahi" alone (without an explicit protein word) are
+    # almost always chicken dishes in this cuisine, so treat them as
+    # "chicken already eaten" too, even though the DB entry is generic.
+    if ("tikka" in matched_lower or "karahi" in matched_lower) and "chicken" not in eaten_keywords:
+        eaten_keywords.append("chicken")
+
     if remaining["protein"] > 40:
-        return LUNCH_PROTEIN, DINNER_PROTEIN
+        primary_pool = PROTEIN_FOCUS_POOL
     elif remaining["carbs"] > 150:
-        return LUNCH_CARBS, DINNER_CARBS
+        primary_pool = CARB_FOCUS_POOL
     else:
-        return LUNCH_BALANCED, DINNER_BALANCED
+        primary_pool = BALANCED_POOL
+
+    # Combine primary pool with the others so there's always a wide,
+    # varied set to draw from (primary pool is just tried first/weighted).
+    full_pool = list(dict.fromkeys(
+        primary_pool + BALANCED_POOL + PROTEIN_FOCUS_POOL + CARB_FOCUS_POOL
+    ))
+
+    lunch = _pick_suggestions(full_pool, 5, exclude_keywords=eaten_keywords)
+    dinner = _pick_suggestions(
+        full_pool, 5, exclude_keywords=eaten_keywords, avoid=lunch
+    )
+
+    return lunch, dinner
 
 
 def process_meal_balance(profile: dict, meal_input: str) -> dict:
@@ -516,6 +685,56 @@ def process_meal_balance(profile: dict, meal_input: str) -> dict:
     targets  = calculate_targets(age, gender, weight, height, activity, goal)
     consumed = parse_meal(meal_input)
 
+    # ====================================================
+    # MEAL NOT RECOGNIZED AT ALL
+    # ====================================================
+    # Nothing in the FOOD_DB matched, so we honestly report "Not available"
+    # instead of fabricating calorie/macro numbers. Daily targets and
+    # lunch/dinner suggestions still make sense to show though.
+    if not consumed.get("recognized", True):
+
+        analysis = generate_analysis(consumed, targets)
+
+        # We don't know what the user still needs today, so suggestions
+        # fall back to balanced, general-purpose options.
+        neutral_remaining = {"calories": 0, "protein": 0, "carbs": 0, "fat": 0}
+        lunch, dinner = get_suggestions(neutral_remaining, [])
+
+        na = "Not available"
+
+        return {
+            "consumed": {
+                "calories": na,
+                "protein":  na,
+                "carbs":    na,
+                "fat":      na,
+            },
+            "targets": targets,
+            "remaining": {
+                "calories": na,
+                "protein":  na,
+                "carbs":    na,
+                "fat":      na,
+            },
+            "micros_consumed": {
+                "fiber_g":    na,
+                "calcium_mg": na,
+                "iron_mg":    na,
+                "vitc_mg":    na,
+            },
+            "micros_targets": {
+                "fiber_g":    targets["fiber"],
+                "calcium_mg": targets["calcium"],
+                "iron_mg":    targets["iron"],
+                "vitc_mg":    targets["vitc"],
+            },
+            "analysis": analysis,
+            "lunch_suggestions": lunch,
+            "dinner_suggestions": dinner,
+            "matched_foods": [],
+            "unrecognized_foods": consumed.get("unrecognized_foods", []),
+        }
+
     remaining = {
         "calories": max(0, targets["calories"] - consumed["calories"]),
         "protein":  max(0, round(targets["protein"] - consumed["protein"], 1)),
@@ -524,7 +743,7 @@ def process_meal_balance(profile: dict, meal_input: str) -> dict:
     }
 
     analysis = generate_analysis(consumed, targets)
-    lunch, dinner = get_suggestions(remaining)
+    lunch, dinner = get_suggestions(remaining, consumed.get("matched_foods", []))
 
     return {
         "consumed": {

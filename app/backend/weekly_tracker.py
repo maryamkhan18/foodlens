@@ -28,7 +28,7 @@ def get_weekly_data():
     total_calories = sum(i["calories"] for i in weekly)
     avg_calories = total_calories / len(weekly)
 
-    healthy = sum(1 for i in weekly if i["health_score"] >= 70)
+    healthy = sum(1 for i in weekly if i["health_score"] >= 75)
     unhealthy = len(weekly) - healthy
 
     return {

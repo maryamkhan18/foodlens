@@ -10,7 +10,7 @@ def generate_insights():
     total_calories = sum(h["calories"] for h in history)
     avg_calories = total_calories / len(history)
 
-    unhealthy_count = sum(1 for h in history if h["health_score"] < 70)
+    unhealthy_count = sum(1 for h in history if h["health_score"] < 75)
 
     most_common_foods = {}
 

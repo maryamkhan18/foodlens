@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 10),
-                  const Text("AI FoodLens 👋",
+                  const Text("AI FoodLens ",
                       style: TextStyle(
                           fontSize: 30, fontWeight: FontWeight.bold)),
                   const SizedBox(height: 5),

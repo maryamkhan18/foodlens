@@ -32,17 +32,17 @@ class _RecipeAdjusterScreenState extends State<RecipeAdjusterScreen>
   late Animation<double> _fadeAnim;
 
 static const String _baseUrl = 'https://foodlens-production-9e4f.up.railway.app';
-  static const _bg       = Color(0xFF0D1117);
-  static const _surface  = Color(0xFF161B22);
-  static const _card     = Color(0xFF1C2333);
-  static const _accent   = Color(0xFFFF7043);
-  static const _accentSoft = Color(0x20FF7043);
-  static const _green    = Color(0xFF00C896);
-  static const _yellow   = Color(0xFFFFB347);
-  static const _red      = Color(0xFFFF6B6B);
-  static const _textPri  = Color(0xFFE6EDF3);
-  static const _textSec  = Color(0xFF8B949E);
-  static const _border   = Color(0xFF30363D);
+  static const _bg       = Color(0xFFFDF6EC);
+  static const _surface  = Color(0xFFFCEEDD);
+  static const _card     = Color(0xFFFFFFFF);
+  static const _accent   = Color(0xFFE8734A);
+  static const _accentSoft = Color(0x26E8734A);
+  static const _green    = Color(0xFF7C9A62);
+  static const _yellow   = Color(0xFFE0A458);
+  static const _red      = Color(0xFFD9695B);
+  static const _textPri  = Color(0xFF3A2E28);
+  static const _textSec  = Color(0xFF8C7A6E);
+  static const _border   = Color(0xFFEBDDC9);
 
   // ─── Lifecycle ───────────────────────────────────────────────────────────
 

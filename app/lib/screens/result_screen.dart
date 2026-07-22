@@ -27,7 +27,6 @@ class _ResultScreenState extends State<ResultScreen> {
   static const Color primaryOrange = Color(0xFFFF7A45);
   static const Color accentTeal = Color(0xFF1E8A78);
   static const Color textDark = Color(0xFF2D2A26);
-  static const Color textGrey = Color(0xFF9A948C);
 
   @override
   void initState() {

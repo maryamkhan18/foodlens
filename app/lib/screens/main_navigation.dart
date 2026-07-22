@@ -28,8 +28,8 @@ class _MainNavigationState extends State<MainNavigation> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,
         backgroundColor: Colors.white,
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.grey,
+        selectedItemColor: const Color(0xFFE8734A),
+        unselectedItemColor: const Color(0xFFB6A594),
         type: BottomNavigationBarType.fixed,
         onTap: (index) => setState(() => currentIndex = index),
         items: const [

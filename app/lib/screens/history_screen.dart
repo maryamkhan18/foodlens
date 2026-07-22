@@ -68,6 +68,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(
         title: const Text("Scan History"),
         centerTitle: true,
@@ -145,10 +146,10 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: Colors.green.withOpacity(0.1),
+                                color: const Color(0xFFE8734A).withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              child: const Icon(Icons.fastfood, color: Colors.green, size: 28),
+                              child: const Icon(Icons.fastfood, color: Color(0xFFE8734A), size: 28),
                             ),
                             const SizedBox(width: 15),
                             Expanded(

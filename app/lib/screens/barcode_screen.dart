@@ -72,8 +72,11 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(
         title: const Text("Barcode Scanner"),
+        backgroundColor: const Color(0xFFE8734A),
+        foregroundColor: Colors.white,
       ),
 
       body: Column(

@@ -74,10 +74,12 @@ class _CameraScreenState extends State<CameraScreen> {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(
         title: const Text("Scan Food"),
         centerTitle: true,
-        backgroundColor: Colors.green,
+        backgroundColor: const Color(0xFFE8734A),
+        foregroundColor: Colors.white,
       ),
 
       body: Padding(
@@ -94,15 +96,15 @@ class _CameraScreenState extends State<CameraScreen> {
               width: double.infinity,
 
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
+                color: const Color(0xFFFCEEDD),
                 borderRadius: BorderRadius.circular(25),
                 border: Border.all(
-                  color: Colors.green.withOpacity(0.5),
+                  color: const Color(0xFFE8734A).withOpacity(0.5),
                   width: 2,
                 ),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.green.withOpacity(0.1),
+                    color: const Color(0xFFE8734A).withOpacity(0.1),
                     blurRadius: 20,
                   )
                 ],
@@ -148,7 +150,8 @@ class _CameraScreenState extends State<CameraScreen> {
                     icon: const Icon(Icons.photo),
                     label: const Text("Gallery"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
+                      backgroundColor: const Color(0xFFC98A4B),
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.all(14),
                     ),
                   ),
@@ -162,7 +165,8 @@ class _CameraScreenState extends State<CameraScreen> {
                     icon: const Icon(Icons.camera_alt),
                     label: const Text("Camera"),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange,
+                      backgroundColor: const Color(0xFFE0A458),
+                      foregroundColor: Colors.white,
                       padding: const EdgeInsets.all(14),
                     ),
                   ),
@@ -181,7 +185,7 @@ class _CameraScreenState extends State<CameraScreen> {
                 onPressed: isLoading ? null : analyzeFood,
 
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: const Color(0xFFE8734A),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18),
                   ),

@@ -86,6 +86,7 @@ class _AIInsightsScreenState extends State<AIInsightsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(
         title: const Text("AI Diet Insights"),
         centerTitle: true,
@@ -104,7 +105,7 @@ class _AIInsightsScreenState extends State<AIInsightsScreen> {
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [Colors.purple, Colors.blue],
+                        colors: [Color(0xFFE8734A), Color(0xFFF4A261)],
                       ),
                       borderRadius: BorderRadius.circular(20),
                     ),
@@ -130,7 +131,7 @@ class _AIInsightsScreenState extends State<AIInsightsScreen> {
                   if (scans.isNotEmpty) ...[
                     Row(
                       children: [
-                        _statCard("Total Scans", scans.length.toString(), Colors.green),
+                        _statCard("Total Scans", scans.length.toString(), const Color(0xFFE8734A)),
                         const SizedBox(width: 12),
                         _statCard(
                           "Healthy",
@@ -160,9 +161,9 @@ class _AIInsightsScreenState extends State<AIInsightsScreen> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
-                      color: Colors.green.withOpacity(0.1),
+                      color: const Color(0xFF7C9A62).withOpacity(0.1),
                       borderRadius: BorderRadius.circular(20),
-                      border: Border.all(color: Colors.green.withOpacity(0.3)),
+                      border: Border.all(color: const Color(0xFF7C9A62).withOpacity(0.3)),
                     ),
                     child: Text(recommendation,
                         style: const TextStyle(fontSize: 16, height: 1.5)),

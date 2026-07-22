@@ -21,6 +21,14 @@ class _ResultScreenState extends State<ResultScreen> {
 
   bool spoken = false;
 
+  // ── THEME (visual only — matches reference UI kits) ──
+  static const Color bgCream = Color(0xFFFFF8EF);
+  static const Color cardWhite = Color(0xFFFFFFFF);
+  static const Color primaryOrange = Color(0xFFFF7A45);
+  static const Color accentTeal = Color(0xFF1E8A78);
+  static const Color textDark = Color(0xFF2D2A26);
+  static const Color textGrey = Color(0xFF9A948C);
+
   @override
   void initState() {
     super.initState();
@@ -59,8 +67,6 @@ class _ResultScreenState extends State<ResultScreen> {
 
     final List foods = widget.result["foods"] ?? [];
 
-   
-
     final List warnings = widget.result["warnings"] ?? [];
 
     final String calories = widget.result["estimated_calories"]?.toString() ?? "0";
@@ -76,20 +82,33 @@ class _ResultScreenState extends State<ResultScreen> {
     int score = int.tryParse(healthScore) ?? 50;
 
     Color getColor() {
-      if (score >= 75) return Colors.green;
-      if (score >= 40) return Colors.orange;
-      return Colors.red;
+      if (score >= 75) return const Color(0xFF2FAE66);
+      if (score >= 40) return primaryOrange;
+      return const Color(0xFFE0503A);
     }
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: bgCream,
       appBar: AppBar(
-        title: const Text("AI Meal Analysis"),
+        title: const Text(
+          "AI Meal Analysis",
+          style: TextStyle(color: textDark, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
+        backgroundColor: bgCream,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: textDark),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.volume_up),
-            onPressed: () => VoiceService.speak(widget.result),
+          Container(
+            margin: const EdgeInsets.only(right: 14),
+            decoration: BoxDecoration(
+              color: accentTeal.withOpacity(0.12),
+              shape: BoxShape.circle,
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.volume_up, color: accentTeal),
+              onPressed: () => VoiceService.speak(widget.result),
+            ),
           ),
         ],
       ),
@@ -100,70 +119,110 @@ class _ResultScreenState extends State<ResultScreen> {
           children: [
 
             // IMAGE
-            ClipRRect(
-              borderRadius: BorderRadius.circular(25),
-              child: Image.file(
-                widget.image,
-                height: 250,
-                width: double.infinity,
-                fit: BoxFit.cover,
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.08),
+                    blurRadius: 16,
+                    offset: const Offset(0, 8),
+                  ),
+                ],
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(28),
+                child: Image.file(
+                  widget.image,
+                  height: 250,
+                  width: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
 
-            const SizedBox(height: 25),
+            const SizedBox(height: 26),
 
             // DETECTED FOODS
             const Text("Detected Foods",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: textDark)),
+            const SizedBox(height: 14),
             Wrap(
               spacing: 10,
               runSpacing: 10,
               children: foods.map((food) => Chip(
-                label: Text(food.toString()),
-                backgroundColor: Colors.green.shade100,
+                label: Text(
+                  food.toString(),
+                  style: const TextStyle(color: accentTeal, fontWeight: FontWeight.w600),
+                ),
+                backgroundColor: accentTeal.withOpacity(0.12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  side: BorderSide(color: accentTeal.withOpacity(0.25)),
+                ),
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
               )).toList(),
             ),
 
-            const SizedBox(height: 30),
-
-           
+            const SizedBox(height: 28),
 
             // NUTRITION
             const Text("Nutrition Information",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
-            buildCard("🔥 Calories", "$calories kcal"),
-            buildCard("💪 Protein", "${protein}g"),
-            buildCard("🍚 Carbs", "${carbs}g"),
-            buildCard("🧈 Fats", "${fats}g"),
-            buildCard("🌾 Fiber", "${fiber}g"),
-            
-             const SizedBox(height: 30),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: textDark)),
+            const SizedBox(height: 14),
+            buildCard("🔥", "Calories", "$calories kcal", primaryOrange),
+            buildCard("💪", "Protein", "${protein}g", accentTeal),
+            buildCard("🍚", "Carbs", "${carbs}g", const Color(0xFFD9A441)),
+            buildCard("🧈", "Fats", "${fats}g", const Color(0xFFE0503A)),
+            buildCard("🌾", "Fiber", "${fiber}g", const Color(0xFF2FAE66)),
+
+            const SizedBox(height: 26),
 
             // HEALTH SCORE
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(25),
+              padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [getColor(), getColor().withOpacity(0.7)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [getColor(), getColor().withOpacity(0.75)],
                 ),
-                borderRadius: BorderRadius.circular(25),
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: getColor().withOpacity(0.35),
+                    blurRadius: 18,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Health Score: $healthScore / 100",
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.22),
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(Icons.favorite, color: Colors.white, size: 24),
+                      ),
+                      const SizedBox(width: 14),
+                      Text(
+                        "Health Score: $healthScore / 100",
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 10),
                   Text(verdict,
-                      style: const TextStyle(color: Colors.white, fontSize: 18)),
+                      style: const TextStyle(color: Colors.white, fontSize: 16)),
                   if (healthNotes.isNotEmpty) ...[
                     const SizedBox(height: 8),
                     Text(healthNotes,
@@ -181,40 +240,57 @@ class _ResultScreenState extends State<ResultScreen> {
                 width: double.infinity,
                 padding: const EdgeInsets.all(18),
                 decoration: BoxDecoration(
-                  color: Colors.blue.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(18),
+                  color: accentTeal.withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(20),
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.restaurant, color: Colors.blue),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: accentTeal.withOpacity(0.18),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.restaurant, color: accentTeal, size: 20),
+                    ),
                     const SizedBox(width: 12),
                     Expanded(
                       child: Text(portionAdvice,
-                          style: const TextStyle(fontSize: 15)),
+                          style: const TextStyle(fontSize: 15, color: textDark)),
                     ),
                   ],
                 ),
               ),
 
-            const SizedBox(height: 25),
+            const SizedBox(height: 26),
 
             // WARNINGS
             const Text("AI Health Warnings",
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 15),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: textDark)),
+            const SizedBox(height: 14),
 
             if (warnings.isEmpty)
               Container(
-                padding: const EdgeInsets.all(15),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.green.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(15),
+                  color: const Color(0xFF2FAE66).withOpacity(0.10),
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Icon(Icons.check_circle, color: Colors.green),
-                    SizedBox(width: 10),
-                    Expanded(child: Text("No major health risks detected")),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: const Color(0xFF2FAE66).withOpacity(0.18),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.check_circle, color: Color(0xFF2FAE66), size: 20),
+                    ),
+                    const SizedBox(width: 12),
+                    const Expanded(
+                      child: Text("No major health risks detected",
+                          style: TextStyle(color: textDark)),
+                    ),
                   ],
                 ),
               )
@@ -223,14 +299,29 @@ class _ResultScreenState extends State<ResultScreen> {
                 margin: const EdgeInsets.only(bottom: 12),
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: Colors.orange.withOpacity(0.15),
-                  borderRadius: BorderRadius.circular(15),
+                  color: cardWhite,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: primaryOrange.withOpacity(0.25)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.04),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
-                    const Icon(Icons.warning, color: Colors.orange),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: primaryOrange.withOpacity(0.15),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(Icons.warning, color: primaryOrange, size: 20),
+                    ),
                     const SizedBox(width: 12),
-                    Expanded(child: Text(w.toString())),
+                    Expanded(child: Text(w.toString(), style: const TextStyle(color: textDark))),
                   ],
                 ),
               )),
@@ -242,14 +333,41 @@ class _ResultScreenState extends State<ResultScreen> {
     );
   }
 
-  Widget buildCard(String title, String value) {
-    return Card(
+  Widget buildCard(String emoji, String title, String value, Color accent) {
+    return Container(
       margin: const EdgeInsets.only(bottom: 12),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(18)),
-      child: ListTile(
-        title: Text(title),
-        trailing: Text(value,
-            style: const TextStyle(fontWeight: FontWeight.bold)),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: cardWhite,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: accent.withOpacity(0.15),
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: Text(emoji, style: const TextStyle(fontSize: 20)),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(title,
+                style: const TextStyle(fontSize: 15, color: textDark, fontWeight: FontWeight.w500)),
+          ),
+          Text(value,
+              style: TextStyle(fontWeight: FontWeight.bold, color: accent, fontSize: 15)),
+        ],
       ),
     );
   }

@@ -63,6 +63,7 @@ class _DietTrackerScreenState extends State<DietTrackerScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(
         title: const Text("Weekly Diet Tracker"),
         centerTitle: true,
@@ -77,7 +78,7 @@ class _DietTrackerScreenState extends State<DietTrackerScreen> {
                   padding: const EdgeInsets.all(20),
                   decoration: BoxDecoration(
                     gradient: const LinearGradient(
-                      colors: [Colors.green, Colors.teal],
+                      colors: [Color(0xFFE8734A), Color(0xFFF4A261)],
                     ),
                     borderRadius: BorderRadius.circular(20),
                   ),

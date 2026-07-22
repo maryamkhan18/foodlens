@@ -8,6 +8,15 @@ class ProductResultScreen extends StatelessWidget {
     required this.productData,
   });
 
+  // ── THEME (visual only — matches reference UI kits) ──
+  static const Color bgCream = Color(0xFFFFF8EF);
+  static const Color cardWhite = Color(0xFFFFFFFF);
+  static const Color primaryOrange = Color(0xFFFF7A45);
+  static const Color accentTeal = Color(0xFF1E8A78);
+  static const Color textDark = Color(0xFF2D2A26);
+  static const Color textGrey = Color(0xFF9A948C);
+
+  // ⚠️ LOGIC UNCHANGED — do not edit calculations below
   int calculateScore(Map nutriments) {
     int score = 100;
     double calories = double.tryParse(nutriments["energy-kcal_100g"]?.toString() ?? "0") ?? 0;
@@ -35,6 +44,7 @@ class ProductResultScreen extends StatelessWidget {
     return score.clamp(0, 100);
   }
 
+  // ⚠️ LOGIC UNCHANGED — do not edit warnings below
   List<Map<String, dynamic>> getWarnings(Map nutriments) {
     List<Map<String, dynamic>> warnings = [];
 
@@ -74,13 +84,20 @@ class ProductResultScreen extends StatelessWidget {
     int score = calculateScore(nutriments);
     List<Map<String, dynamic>> warnings = getWarnings(nutriments);
 
-    Color scoreColor = score >= 70 ? Colors.green : score >= 40 ? Colors.orange : Colors.red;
+    Color scoreColor = score >= 70 ? const Color(0xFF2FAE66) : score >= 40 ? primaryOrange : const Color(0xFFE0503A);
     String verdict = score >= 70 ? "Healthy ✅" : score >= 40 ? "Moderate ⚠️" : "Unhealthy ❌";
 
     return Scaffold(
+      backgroundColor: bgCream,
       appBar: AppBar(
-        title: const Text("Product Analysis"),
+        title: const Text(
+          "Product Analysis",
+          style: TextStyle(color: textDark, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
+        backgroundColor: bgCream,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: textDark),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -90,92 +107,148 @@ class ProductResultScreen extends StatelessWidget {
 
             // PRODUCT IMAGE
             if (product["image_url"] != null)
-              ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.network(
-                  product["image_url"],
-                  height: 250,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.08),
+                      blurRadius: 16,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(28),
+                  child: Image.network(
+                    product["image_url"],
+                    height: 250,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 22),
 
             // PRODUCT NAME
             Text(
               product["product_name"] ?? "Unknown Product",
-              style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 26,
+                fontWeight: FontWeight.bold,
+                color: textDark,
+              ),
             ),
 
             if (product["brands"] != null) ...[
-              const SizedBox(height: 5),
+              const SizedBox(height: 6),
               Text(product["brands"].toString(),
-                  style: const TextStyle(color: Colors.grey, fontSize: 15)),
+                  style: const TextStyle(color: textGrey, fontSize: 15)),
             ],
 
-            const SizedBox(height: 20),
+            const SizedBox(height: 22),
 
             // HEALTH SCORE
             Container(
               width: double.infinity,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(22),
               decoration: BoxDecoration(
                 gradient: LinearGradient(
-                    colors: [scoreColor, scoreColor.withOpacity(0.7)]),
-                borderRadius: BorderRadius.circular(20),
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [scoreColor, scoreColor.withOpacity(0.75)],
+                ),
+                borderRadius: BorderRadius.circular(28),
+                boxShadow: [
+                  BoxShadow(
+                    color: scoreColor.withOpacity(0.35),
+                    blurRadius: 18,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Text("Health Score: $score / 100",
-                      style: const TextStyle(
-                          color: Colors.white,
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 5),
-                  Text(verdict,
-                      style: const TextStyle(color: Colors.white, fontSize: 16)),
+                  Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: Colors.white.withOpacity(0.22),
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.favorite, color: Colors.white, size: 28),
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("Health Score: $score / 100",
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 4),
+                        Text(verdict,
+                            style: const TextStyle(color: Colors.white, fontSize: 15)),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 25),
+            const SizedBox(height: 28),
 
             // NUTRITION
             const Text("Nutrition (per 100g)",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textDark)),
+            const SizedBox(height: 14),
 
-            buildCard("🔥 Calories", "${nutriments["energy-kcal_100g"] ?? "N/A"} kcal"),
-            buildCard("🍬 Sugar", "${nutriments["sugars_100g"] ?? "N/A"} g"),
-            buildCard("🧈 Fat", "${nutriments["fat_100g"] ?? "N/A"} g"),
-            buildCard("💪 Protein", "${nutriments["proteins_100g"] ?? "N/A"} g"),
-            buildCard("🌾 Fiber", "${nutriments["fiber_100g"] ?? "N/A"} g"),
-            buildCard("🧂 Sodium", "${nutriments["sodium_100g"] ?? "N/A"} g"),
+            buildCard("🔥", "Calories", "${nutriments["energy-kcal_100g"] ?? "N/A"} kcal", primaryOrange),
+            buildCard("🍬", "Sugar", "${nutriments["sugars_100g"] ?? "N/A"} g", const Color(0xFFE0503A)),
+            buildCard("🧈", "Fat", "${nutriments["fat_100g"] ?? "N/A"} g", const Color(0xFFD9A441)),
+            buildCard("💪", "Protein", "${nutriments["proteins_100g"] ?? "N/A"} g", accentTeal),
+            buildCard("🌾", "Fiber", "${nutriments["fiber_100g"] ?? "N/A"} g", const Color(0xFF2FAE66)),
+            buildCard("🧂", "Sodium", "${nutriments["sodium_100g"] ?? "N/A"} g", const Color(0xFF6C8CBF)),
 
-            const SizedBox(height: 25),
+            const SizedBox(height: 26),
 
             // WARNINGS
             const Text("Health Warnings",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 12),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: textDark)),
+            const SizedBox(height: 14),
 
             ...warnings.map((w) => Container(
               margin: const EdgeInsets.only(bottom: 12),
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: (w["color"] as Color).withOpacity(0.12),
-                borderRadius: BorderRadius.circular(15),
+                color: cardWhite,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: (w["color"] as Color).withOpacity(0.25)),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.04),
+                    blurRadius: 10,
+                    offset: const Offset(0, 4),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
-                  Icon(Icons.info_outline, color: w["color"] as Color),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: (w["color"] as Color).withOpacity(0.15),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(Icons.info_outline, color: w["color"] as Color, size: 20),
+                  ),
                   const SizedBox(width: 12),
                   Expanded(
                     child: Text(w["text"],
                         style: TextStyle(
-                            color: w["color"] as Color,
+                            color: textDark,
                             fontWeight: FontWeight.w600)),
                   ),
                 ],
@@ -189,14 +262,41 @@ class ProductResultScreen extends StatelessWidget {
     );
   }
 
-  Widget buildCard(String title, String value) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 10),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      child: ListTile(
-        title: Text(title),
-        trailing: Text(value,
-            style: const TextStyle(fontWeight: FontWeight.bold)),
+  Widget buildCard(String emoji, String title, String value, Color accent) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+      decoration: BoxDecoration(
+        color: cardWhite,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.05),
+            blurRadius: 10,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 42,
+            height: 42,
+            decoration: BoxDecoration(
+              color: accent.withOpacity(0.15),
+              shape: BoxShape.circle,
+            ),
+            alignment: Alignment.center,
+            child: Text(emoji, style: const TextStyle(fontSize: 20)),
+          ),
+          const SizedBox(width: 14),
+          Expanded(
+            child: Text(title,
+                style: const TextStyle(fontSize: 15, color: textDark, fontWeight: FontWeight.w500)),
+          ),
+          Text(value,
+              style: TextStyle(fontWeight: FontWeight.bold, color: accent, fontSize: 15)),
+        ],
       ),
     );
   }

@@ -148,7 +148,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: const Color(0xFFFDF6EC),
       body: FadeTransition(
         opacity: fade,
         child: SlideTransition(
@@ -174,11 +174,11 @@ class _HomeScreenState extends State<HomeScreen>
                     width: double.infinity,
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                          colors: [Colors.green, Colors.teal]),
+                          colors: [Color(0xFFE8734A), Color(0xFFF4A261)]),
                       borderRadius: BorderRadius.circular(25),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.green.withOpacity(0.2),
+                          color: const Color(0xFFE8734A).withOpacity(0.25),
                           blurRadius: 20,
                           offset: const Offset(0, 8),
                         )
@@ -210,11 +210,11 @@ class _HomeScreenState extends State<HomeScreen>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       statCard("Scans", totalScans.toString(),
-                          Icons.camera_alt, Colors.green),
+                          Icons.camera_alt, const Color(0xFFE8734A)),
                       statCard("Healthy", healthyMeals.toString(),
-                          Icons.favorite, Colors.teal),
+                          Icons.favorite, const Color(0xFF7C9A62)),
                       statCard("Alerts", alerts.toString(),
-                          Icons.warning, Colors.orange),
+                          Icons.warning, const Color(0xFFE0A458)),
                     ],
                   ),
 
@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen>
                     title: "Scan Food",
                     subtitle: "Analyze food using camera AI",
                     icon: Icons.camera_alt,
-                    color: Colors.green,
+                    color: const Color(0xFFE8734A),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(
                             builder: (_) => const CameraScreen())),
@@ -233,7 +233,7 @@ class _HomeScreenState extends State<HomeScreen>
                     title: "Barcode Scanner",
                     subtitle: "Scan packaged food products",
                     icon: Icons.qr_code_scanner,
-                    color: Colors.orange,
+                    color: const Color(0xFFE0A458),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(
                             builder: (_) => const BarcodeScreen())),
@@ -242,7 +242,7 @@ class _HomeScreenState extends State<HomeScreen>
                     title: "Meal Balance Analyzer",
                     subtitle: "Personalized daily nutrition plan",
                     icon: Icons.balance,
-                    color: Colors.teal,
+                    color: const Color(0xFF7C9A62),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(
                             builder: (_) => const MealBalanceScreen())),
@@ -251,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen>
                     title: "Recipe Adjuster",
                     subtitle: "Adjust recipes to what you have",
                     icon: Icons.tune,
-                    color: Colors.deepOrange,
+                    color: const Color(0xFFD9695B),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(
                             builder: (_) => const RecipeAdjusterScreen())),
@@ -261,7 +261,7 @@ class _HomeScreenState extends State<HomeScreen>
                     title: "Weekly Diet Tracker",
                     subtitle: "Track your nutrition weekly",
                     icon: Icons.calendar_month,
-                    color: Colors.blue,
+                    color: const Color(0xFFC98A4B),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(
                             builder: (_) => const DietTrackerScreen())),
@@ -270,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen>
   title: "Diet Planner",
   subtitle: "Disease based meal system",
   icon: Icons.health_and_safety,
-  color: Colors.red,
+  color: const Color(0xFFB05C3D),
   onTap: () => Navigator.push(
     context,
     MaterialPageRoute(
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen>
                     title: "AI Insights",
                     subtitle: "Smart diet analysis from history",
                     icon: Icons.insights,
-                    color: Colors.deepPurple,
+                    color: const Color(0xFF8C6B4F),
                     onTap: () => Navigator.push(context,
                         MaterialPageRoute(
                             builder: (_) => const AIInsightsScreen())),

@@ -156,7 +156,9 @@ async def analyze(file: UploadFile = File(...)):
         "protein": total["protein"],
         "carbs": total["carbs"],
         "fats": total["fats"],
-        "health_score": score
+        "health_score": score,
+        "verdict": verdict,
+        "warnings": warnings
     })
 
     return {

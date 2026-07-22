@@ -74,6 +74,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(
         title: const Text("Meal Balance Analyzer"),
         centerTitle: true,
@@ -117,7 +118,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
                       loadProfile();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green,
+                      backgroundColor: const Color(0xFFE8734A),
                     ),
                     child: const Text(
                       "Setup Profile",
@@ -137,7 +138,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       gradient: const LinearGradient(
-                        colors: [Colors.green, Colors.teal],
+                        colors: [Color(0xFFE8734A), Color(0xFFF4A261)],
                       ),
                       borderRadius: BorderRadius.circular(18),
                     ),
@@ -201,7 +202,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
                     child: ElevatedButton(
                       onPressed: analyzing ? null : analyzeMeal,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: const Color(0xFFE8734A),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -351,7 +352,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
                           100)
                       .clamp(0, 100)
                 : 0,
-            Colors.green,
+            Color(0xFF7C9A62),
           ),
           _macroRow(
             "🦴 Calcium",
@@ -363,7 +364,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
                           100)
                       .clamp(0, 100)
                 : 0,
-            Colors.teal,
+            Color(0xFFC98A4B),
           ),
           _macroRow(
             "🩸 Iron",
@@ -401,7 +402,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.blue.withOpacity(0.08),
+            color: const Color(0xFFE8734A).withOpacity(0.08),
             borderRadius: BorderRadius.circular(15),
           ),
           child: Text(
@@ -418,7 +419,7 @@ class _MealBalanceScreenState extends State<MealBalanceScreen> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
-        ...lunch.map((l) => _suggestionCard(l.toString(), Colors.green)),
+        ...lunch.map((l) => _suggestionCard(l.toString(), const Color(0xFF7C9A62))),
 
         const SizedBox(height: 20),
 
@@ -602,6 +603,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(title: const Text("Setup Profile"), centerTitle: true),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -612,7 +614,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
-                  colors: [Colors.green, Colors.teal],
+                  colors: [Color(0xFFE8734A), Color(0xFFF4A261)],
                 ),
                 borderRadius: BorderRadius.circular(18),
               ),
@@ -673,7 +675,7 @@ class _ProfileSetupScreenState extends State<ProfileSetupScreen> {
               child: ElevatedButton(
                 onPressed: saveProfile,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: const Color(0xFFE8734A),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(15),
                   ),

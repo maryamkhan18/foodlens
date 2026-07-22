@@ -100,7 +100,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
         width: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.green, Colors.teal],
+            colors: [Color(0xFFE8734A), Color(0xFFF4A261)],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

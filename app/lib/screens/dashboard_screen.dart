@@ -8,6 +8,7 @@ class DashboardScreen extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Scaffold(
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(title: const Text("Nutrition Dashboard")),
 
       body: Padding(
@@ -31,7 +32,7 @@ class DashboardScreen extends StatelessWidget {
               width: double.infinity,
 
               decoration: BoxDecoration(
-                color: Colors.green.withOpacity(0.1),
+                color: const Color(0xFFE8734A).withOpacity(0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
 
@@ -76,12 +77,12 @@ class DashboardScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   gradient: const LinearGradient(
-                    colors: [Color(0xFFFF6B35), Color(0xFFFF9F1C)],
+                    colors: [Color(0xFFE8734A), Color(0xFFF4A261)],
                   ),
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.orange.withOpacity(0.3),
+                      color: const Color(0xFFE8734A).withOpacity(0.3),
                       blurRadius: 8,
                       offset: const Offset(0, 4),
                     ),

@@ -45,7 +45,7 @@ class _DietPlannerScreenState extends State<DietPlannerScreen> {
     final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF6F7FB),
+      backgroundColor: const Color(0xFFFDF6EC),
       appBar: AppBar(
         title: const Text(
           "Diet Planner",
@@ -53,8 +53,8 @@ class _DietPlannerScreenState extends State<DietPlannerScreen> {
         ),
         centerTitle: false,
         elevation: 0,
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black87,
+        backgroundColor: const Color(0xFFFDF6EC),
+        foregroundColor: const Color(0xFF3A2E28),
       ),
       body: SafeArea(
         child: Padding(
